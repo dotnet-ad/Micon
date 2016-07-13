@@ -28,11 +28,17 @@ namespace Micon.Portable.Generation
 			return Task.WhenAll(tasks);
 		}
 
-		private async Task<IBitmap> GenerateIcon(IBitmap hdImage, IBitmap backgroundImage, string outputFolder, Generation.SystemIcons system, Icon icon)
+		public async Task<IBitmap> GenerateIcon(IBitmap hdImage, IBitmap backgroundImage, string outputFolder, Generation.SystemIcons system, Icon icon)
 		{
 			outputFolder = outputFolder.TrimEnd(new char[] { '/', '\\' });
 			var path = $"{outputFolder}/{system.Name}/{icon.Name}";
+			var result = await this.GenerateIcon(path, hdImage, backgroundImage, icon);
+			await result.Save();
+			return result;
+		}
 
+		public async Task<IBitmap> GenerateIcon(string path, IBitmap hdImage, IBitmap backgroundImage, Icon icon)
+		{
 			var result = await this.loader.Create(path, icon.Width, icon.Height);
 
 			if (icon.HasBackground)
@@ -41,7 +47,6 @@ namespace Micon.Portable.Generation
 			}
 
 			result.Draw(hdImage, icon.ImageArea);
-			await result.Save();
 			return result;
 		}
 	}
