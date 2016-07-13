@@ -1,0 +1,26 @@
+﻿<Application x:Class="Micon.Windows.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Micon.Windows"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        
+        <!-- Brushes -->
+
+        <SolidColorBrush x:Key="MiconDarkForegroundBrush">#7a7a7a</SolidColorBrush>
+        <SolidColorBrush x:Key="MiconLightForegroundBrush">#ffffff</SolidColorBrush>
+        <SolidColorBrush x:Key="MiconSemiLightBackgroundBrush">#e1e1e2</SolidColorBrush>
+        <SolidColorBrush x:Key="MiconLightBackgroundBrush">#ffffff</SolidColorBrush>
+        <SolidColorBrush x:Key="MiconDarkBackgroundBrush">#2d2a33</SolidColorBrush>
+        <SolidColorBrush x:Key="MiconSemiDarkBackgroundBrush">#6f6b76</SolidColorBrush>
+        <SolidColorBrush x:Key="MiconAccentBrush">#4599d9</SolidColorBrush>
+        
+        <!-- Styles -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource MiconAccentBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{StaticResource MiconLightForegroundBrush}" />
+        </Style>
+        
+    </Application.Resources>
+</Application>
