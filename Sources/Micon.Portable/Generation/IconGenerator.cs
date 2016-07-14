@@ -8,9 +8,11 @@ namespace Micon.Portable.Generation
 {
 	public class IconGenerator
 	{
-		public IconGenerator(IBitmapLoader loader)
+		public IconGenerator(IBitmapLoader loader = null)
 		{
-			this.loader = loader;
+			// Dependencies
+			var locator = Splat.Locator.Current;
+			this.loader = loader ?? (IBitmapLoader)locator.GetService(typeof(IBitmapLoader));
 		}
 
 		readonly IBitmapLoader loader;

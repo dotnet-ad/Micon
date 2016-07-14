@@ -3,11 +3,14 @@
 using AppKit;
 using Foundation;
 using Micon.Mac.Bitmaps;
+using Micon.Portable;
 using Micon.Portable.Generation;
+using ReactiveUI;
+using Splat;
 
 namespace Micon
 {
-	public partial class ViewController : NSViewController
+	public partial class ViewController : ReactiveViewController, IViewFor<HomeViewModel>
 	{
 		public ViewController(IntPtr handle) : base(handle)
 		{
@@ -17,6 +20,7 @@ namespace Micon
 		{
 			base.ViewDidLoad();
 
+			this.ViewModel = new HomeViewModel();
 
 			Test();
 			// Do any additional setup after loading the view.
@@ -47,15 +51,26 @@ namespace Micon
 
 		public override NSObject RepresentedObject
 		{
-			get
-			{
-				return base.RepresentedObject;
-			}
-			set
-			{
-				base.RepresentedObject = value;
-				// Update the view, if already loaded.
-			}
+			get { return base.RepresentedObject; }
+			set { base.RepresentedObject = value; }
 		}
+
+		#region Reactive implementation
+
+		private HomeViewModel viewModel;
+
+		public HomeViewModel ViewModel
+		{
+			get { return this.viewModel;}
+			set { this.RaiseAndSetIfChanged(ref viewModel, value); }
+		}
+
+		object IViewFor.ViewModel
+		{
+			get { return this.ViewModel; }
+			set { this.ViewModel = (HomeViewModel)value; }
+		}
+
+		#endregion
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using AppKit;
+using Micon.Mac;
 
 namespace Micon
 {
@@ -6,6 +7,7 @@ namespace Micon
 	{
 		static void Main(string[] args)
 		{
+			MacDependencies.Init();
 			NSApplication.Init();
 			NSApplication.Main(args);
 		}

@@ -9,18 +9,19 @@ namespace Micon.Portable
 {
 	public class HomeViewModel: ReactiveObject
 	{
-		public HomeViewModel(IBitmapLoader loader, IconGenerator generator)
+		public HomeViewModel(IBitmapLoader loader = null, IconGenerator generator = null)
 		{
 			// Dependencies
-			this.loader = loader;
-			this.generator = generator;
+			var locator = Splat.Locator.Current;
+			this.loader = loader ?? locator.GetService<IBitmapLoader>();
+			this.generator = generator ?? locator.GetService<IconGenerator>();
 
 			// Reactive
 			this.LoadLogoCommand = ReactiveCommand.CreateAsyncTask(ExecuteLoadImageCommand);
 			this.LoadBackgroundCommand = ReactiveCommand.CreateAsyncTask(ExecuteLoadImageCommand);
 			this.LoadLogoCommand.Subscribe((img) => this.Logo = img);
 			this.LoadBackgroundCommand.Subscribe((img) => this.Background = img);
-			this.WhenAny((x) => x.Logo, (x) => x.Background, (logo, bg) => new PreviewItemViewModel(this.generator,logo.Value,bg.Value)).Subscribe((x) => this.Preview = x);
+			this.WhenAny((x) => x.Logo, (x) => x.Background, (logo, bg) => new PreviewItemViewModel(this.generator,logo.Value,bg.Value)).ToProperty(this,(x) => x.Preview);
 
 		}
 

@@ -41,12 +41,15 @@
     <Compile Include="Generation\Rectangle.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\New Folder\PreviewItemViewModel.cs" />
+    <Compile Include="Dependencies.cs" />
+    <Compile Include="Extensions\LocatorExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bitmaps\" />
     <Folder Include="Generation\" />
     <Folder Include="ViewModels\" />
     <Folder Include="ViewModels\New Folder\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Reactive.Interfaces">
