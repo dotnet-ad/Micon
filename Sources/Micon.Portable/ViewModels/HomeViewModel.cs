@@ -21,13 +21,14 @@ namespace Micon.Portable
 			this.LoadBackgroundCommand = ReactiveCommand.CreateAsyncTask(ExecuteLoadImageCommand);
 			this.LoadLogoCommand.Subscribe((img) => this.Logo = img);
 			this.LoadBackgroundCommand.Subscribe((img) => this.Background = img);
-			this.WhenAny((x) => x.Logo, (x) => x.Background, (logo, bg) => new PreviewItemViewModel(this.generator,logo.Value,bg.Value)).ToProperty(this,(x) => x.Preview);
+            this.WhenAnyValue((x) => x.Logo, (x) => x.Background, (logo, bg) => new PreviewItemViewModel(this.generator, logo, bg)).Subscribe((o) => this.Preview = o);// .ToProperty(this,(x) => x.Preview);
+            this.WhenAnyValue((x) => x.Logo).Subscribe((i) => this.RaisePropertyChanged(nameof(LogoPath)));
+            this.WhenAnyValue((x) => x.Background).Subscribe((i) => this.RaisePropertyChanged(nameof(BackgroundPath)));
+        }
 
-		}
+        #region Fields
 
-		#region Fields
-
-		readonly IBitmapLoader loader;
+        readonly IBitmapLoader loader;
 
 		readonly IconGenerator generator;
 
@@ -41,7 +42,18 @@ namespace Micon.Portable
 
 		#region Bound properties
 
-		public IBitmap Logo
+        public string LogoPath
+        {
+            get { return this.Logo?.Path; }
+            set { this.LoadLogoCommand.Execute(value); }
+        }
+        public string BackgroundPath
+        {
+            get { return this.Background?.Path; }
+            set { this.LoadBackgroundCommand.Execute(value); }
+        }
+
+        public IBitmap Logo
 		{
 			get { return logo; }
 			set { this.RaiseAndSetIfChanged(ref logo, value); }

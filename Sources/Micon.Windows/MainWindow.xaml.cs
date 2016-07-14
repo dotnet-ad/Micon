@@ -26,7 +26,35 @@ namespace Micon.Windows
         {
             InitializeComponent();
             Test();
+
+            this.DataContext = new Portable.HomeViewModel();
+
+            this.SizeChanged += MainWindow_SizeChanged;
             // Do any additional setup after loading the view.
+            this.UpdatePanel(this.RenderSize);
+        }
+        const int min = 1200;
+
+        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if(e.PreviousSize.Width <=  min && e.NewSize.Width > min || e.PreviousSize.Width >= min && e.NewSize.Width < min)
+            {
+                UpdatePanel(e.NewSize);
+            }
+        }
+
+        private void UpdatePanel(Size size)
+        {
+            if (size.Width > min)
+            {
+                this.widePanel.Visibility = Visibility.Visible;
+                this.smallPanel.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                this.widePanel.Visibility = Visibility.Hidden;
+                this.smallPanel.Visibility = Visibility.Visible;
+            }
         }
 
         private async void Test()
@@ -49,13 +77,6 @@ namespace Micon.Windows
             {
 
             }
-
-        }
-
-        private void SystemSelector_SelectedItemChanged(object sender, int e)
-        {
-            this.previewIos.IsAnimatedVisible = e == 0;
-            this.previewAndroid.IsAnimatedVisible = e == 1;
         }
     }
 }

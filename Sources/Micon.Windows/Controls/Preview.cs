@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Micon.Portable.Bitmaps;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,14 @@ namespace Micon.Windows.Controls
 {
     public class Preview : UserControl
     {
-
+        public IBitmap Icon
+        {
+            get { return (IBitmap)GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
+        }
+        
+        public static readonly DependencyProperty IconProperty =  DependencyProperty.Register("Icon", typeof(IBitmap), typeof(Preview), new PropertyMetadata(null));
+        
         public static readonly DependencyProperty IsAnimatedVisibleProperty = DependencyProperty.Register("IsAnimatedVisible", typeof(bool), typeof(Preview), new FrameworkPropertyMetadata(false, OnVisiblePropertyChanged));
 
         public bool IsAnimatedVisible
@@ -27,15 +35,24 @@ namespace Micon.Windows.Controls
 
             if (visible)
             {
-                var sb = (Storyboard)control.Resources["ShowStoryboard"];
-                sb.Begin();
+                control.Show();
             }
             else
             {
-                var sb = (Storyboard)control.Resources["HideStoryboard"];
-                sb.Begin();
-
+                control.Hide();
             }
+        }
+
+        public void Show()
+        {
+            var sb = (Storyboard)this.Resources["ShowStoryboard"];
+            sb.Begin();
+        }
+
+        public void Hide()
+        {
+            var sb = (Storyboard)this.Resources["HideStoryboard"];
+            sb.Begin();
         }
     }
 }

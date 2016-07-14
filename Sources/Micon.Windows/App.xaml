@@ -2,9 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Micon.Windows"
+             xmlns:conv="clr-namespace:Micon.Windows.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         
+        <!-- Converters -->
+
+        <conv:BitmapConverter x:Key="BitmapConverter" />
+        <conv:VisibilityConverter x:Key="VisibilityConverter" />
+
         <!-- Brushes -->
 
         <SolidColorBrush x:Key="MiconDarkForegroundBrush">#7a7a7a</SolidColorBrush>
@@ -16,6 +22,7 @@
         <SolidColorBrush x:Key="MiconAccentBrush">#4599d9</SolidColorBrush>
         
         <!-- Styles -->
+        
         <Style TargetType="Button">
             <Setter Property="Background" Value="{StaticResource MiconAccentBrush}" />
             <Setter Property="BorderThickness" Value="0" />

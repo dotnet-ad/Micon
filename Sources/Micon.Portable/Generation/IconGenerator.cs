@@ -41,9 +41,12 @@ namespace Micon.Portable.Generation
 
 		public async Task<IBitmap> GenerateIcon(string path, IBitmap hdImage, IBitmap backgroundImage, Icon icon)
 		{
+            if (hdImage == null)
+                return null;
+
 			var result = await this.loader.Create(path, icon.Width, icon.Height);
 
-			if (icon.HasBackground)
+			if (icon.HasBackground && backgroundImage != null)
 			{
 				result.Draw(backgroundImage, result.Bounds);
 			}

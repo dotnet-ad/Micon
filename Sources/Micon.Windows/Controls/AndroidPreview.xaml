@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Micon.Windows.Controls"
              mc:Ignorable="d" 
+               x:Name="root"
              d:DesignHeight="350" d:DesignWidth="350">
     <local:Preview.Resources>
         <Storyboard x:Key="ShowStoryboard" BeginTime="0:0:0.3">
@@ -52,6 +53,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Image Grid.ColumnSpan="9" Grid.RowSpan="9" Stretch="UniformToFill" Source="/Assets/device_nexus.png" />
-        <Rectangle Grid.Row="1" Grid.Column="1" Width="50" Height="50" Fill="Wheat" />
+        <TextBlock Visibility="{Binding Icon, ElementName=root, Converter={StaticResource VisibilityConverter}}" Text="App" Grid.Row="2" Grid.Column="1" TextAlignment="Center" Foreground="White" FontSize="10" Margin="0,2,0,0" FontWeight="Light" Grid.RowSpan="2" />
+        <Rectangle x:Name="iconImage" Grid.Row="1" Grid.Column="1" Stretch="Uniform">
+            <Rectangle.Fill>
+                <ImageBrush Stretch="Fill" AlignmentX="Center" AlignmentY="Center" ImageSource="{Binding Icon, ElementName=root, Converter={StaticResource BitmapConverter}}" />
+            </Rectangle.Fill>
+        </Rectangle>
     </Grid>
 </local:Preview>

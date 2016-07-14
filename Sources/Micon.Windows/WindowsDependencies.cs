@@ -1,5 +1,5 @@
 ﻿using System;
-using Micon.Mac.Bitmaps;
+using Micon.Windows.Bitmaps;
 using Micon.Portable;
 using Micon.Portable.Bitmaps;
 

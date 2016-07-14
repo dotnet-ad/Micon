@@ -9,7 +9,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -17,15 +16,19 @@ using System.Windows.Shapes;
 namespace Micon.Windows.Controls
 {
     /// <summary>
-    /// Interaction logic for ApplePreview.xaml
+    /// Interaction logic for SmallPreviewPanel.xaml
     /// </summary>
-    public partial class ApplePreview
+    public partial class SmallPreviewPanel : UserControl
     {
-        public ApplePreview()
+        public SmallPreviewPanel()
         {
             InitializeComponent();
+        }
 
-            //this.iconImage.Clip = 
+        private void SystemSelector_SelectedItemChanged(object sender, int e)
+        {
+            this.previewIos.IsAnimatedVisible = e == 0;
+            this.previewAndroid.IsAnimatedVisible = e == 1;
         }
     }
 }

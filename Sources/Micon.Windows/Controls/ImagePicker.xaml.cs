@@ -24,5 +24,43 @@ namespace Micon.Windows.Controls
         {
             InitializeComponent();
         }
+
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+        
+        public static readonly DependencyProperty TitleProperty =  DependencyProperty.Register("Title", typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
+
+        public string Description
+        {
+            get { return (string)GetValue(DescriptionProperty); }
+            set { SetValue(DescriptionProperty, value); }
+        }
+        
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
+        
+        public string Path
+        {
+            get { return (string)GetValue(PathProperty); }
+            set { SetValue(PathProperty, value); }
+        }
+        
+        public static readonly DependencyProperty PathProperty =  DependencyProperty.Register("Path", typeof(string), typeof(ImagePicker), new FrameworkPropertyMetadata(null,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".png";
+            dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+            
+            var result = dlg.ShowDialog();
+            
+            if (result == true)
+            {
+                this.Path = dlg.FileName;
+            }
+        }
     }
 }

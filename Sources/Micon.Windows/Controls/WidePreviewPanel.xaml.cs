@@ -9,7 +9,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -17,15 +16,13 @@ using System.Windows.Shapes;
 namespace Micon.Windows.Controls
 {
     /// <summary>
-    /// Interaction logic for ApplePreview.xaml
+    /// Interaction logic for WidePreviewPanel.xaml
     /// </summary>
-    public partial class ApplePreview
+    public partial class WidePreviewPanel : UserControl
     {
-        public ApplePreview()
+        public WidePreviewPanel()
         {
             InitializeComponent();
-
-            //this.iconImage.Clip = 
         }
     }
 }

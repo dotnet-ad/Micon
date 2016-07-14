@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Micon.Windows.Controls.SmallPreviewPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Micon.Windows.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="350" />
+        </Grid.RowDefinitions>
+        <local:SystemSelector SelectedItemChanged="SystemSelector_SelectedItemChanged" />
+        <local:ApplePreview x:Name="previewIos" Icon="{Binding Preview.Apple}" Grid.Row="1" IsAnimatedVisible="True" />
+        <local:AndroidPreview x:Name="previewAndroid" Icon="{Binding Preview.Android}" Grid.Row="1" />
+    </Grid>
+</UserControl>
