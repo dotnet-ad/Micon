@@ -74,7 +74,7 @@ namespace Micon.Windows.Bitmaps
         {
             var otherNsImage = ((WindowsBitmap)other).Image;
             
-            var img = new Image() { Source = otherNsImage, Stretch = Stretch.Fill };
+            var img = new Image() { Source = otherNsImage, Stretch = Stretch.Uniform };
             img.Measure(new System.Windows.Size(area.Width,area.Height));
             img.Arrange(new Rect(area.X, area.Y, area.Width, area.Height));
             this.Image.Render(img);
@@ -106,12 +106,12 @@ namespace Micon.Windows.Bitmaps
         {
             var l = color.Lightness;
 
-            var darkColor = color.Lerp(Micon.Portable.Generation.Color.FromRgb(0, 0, 0), l * 0.70).ToNative();
+            var darkColor = color.Lerp(Micon.Portable.Generation.Color.FromRgb(0, 0, 0), l * 0.20).ToNative();
 
             if (endColor == null)
                 return new SolidColorBrush(darkColor);
 
-            var endDarkColor = endColor.Lerp(Micon.Portable.Generation.Color.FromRgb(0, 0, 0), l * 0.90).ToNative();
+            var endDarkColor = endColor.Lerp(Micon.Portable.Generation.Color.FromRgb(0, 0, 0), l * 0.40).ToNative();
 
             return new LinearGradientBrush(darkColor, endDarkColor, 95);
         }

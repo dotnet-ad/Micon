@@ -5,20 +5,20 @@ using Micon.Portable.Bitmaps;
 using Micon.Portable.Generation;
 using ReactiveUI;
 using System.Reactive.Linq;
+using ReactiveUI.Fody.Helpers;
 
 namespace Micon.Portable
 {
 	public class HomeViewModel: ReactiveObject
 	{
-		public HomeViewModel(IBitmapLoader loader = null, IconGenerator generator = null)
+		public HomeViewModel(IBitmapLoader loader, IconGenerator generator)
 		{
             this.LogoScale = 1.0;
             this.BackgroundColor = Color.FromRgb(0x45, 0x99, 0xd9);
-            
-			// Dependencies
-			var locator = Splat.Locator.Current;
-			this.loader = loader ?? locator.GetService<IBitmapLoader>();
-			this.generator = generator ?? locator.GetService<IconGenerator>();
+
+            //Depdencies
+            this.loader = loader;
+            this.generator = generator;
 
 			// Reactive
 			this.LoadLogoCommand = ReactiveCommand.CreateAsyncTask(ExecuteLoadImageCommand);
@@ -30,7 +30,7 @@ namespace Micon.Portable
                 (x) => x.BackgroundEndColor, 
                 (x) => x.BackgroundShape, 
                 (x) => x.GradientMode,
-                (logo, scale, color,endColor, shape,gradient) => new PreviewItemViewModel(this.generator, logo, scale, color,endColor, gradientMode, shape))
+                (logo, scale, color,endColor, shape,gradient) => new PreviewItemViewModel(this.generator, logo, scale, color,endColor, gradient, shape))
               //.Throttle(TimeSpan.FromMilliseconds(200))
               .Subscribe((o) => this.Preview = o);// .ToProperty(this,(x) => x.Preview);
             this.WhenAnyValue((x) => x.Logo).Subscribe((i) => this.RaisePropertyChanged(nameof(LogoPath)));
@@ -42,79 +42,39 @@ namespace Micon.Portable
 
 		readonly IconGenerator generator;
 
-		private IBitmap logo;
-
-        private double logoScale;
-
-        private Color backgroundColor;
-
-        private Color backgroundEndColor;
-
-        private Shape backgroundShape;
-
-        private GradientMode gradientMode;
-
-        private PreviewItemViewModel preview;
-
-        private ScreenBackground screenBackground;
-
         #endregion
 
         #region Bound properties
-
+        
         public string LogoPath
         {
             get { return this.Logo?.Path; }
             set { this.LoadLogoCommand.Execute(value); }
         }
 
-        public IBitmap Logo
-		{
-			get { return logo; }
-			set { this.RaiseAndSetIfChanged(ref logo, value); }
-		}
+        [Reactive]
+        public IBitmap Logo { get; set; }
 
-        public double LogoScale
-        {
-            get { return logoScale; }
-            set { this.RaiseAndSetIfChanged(ref logoScale, value); }
-        }
+        [Reactive]
+        public double LogoScale { get; set; }
 
-        public Color BackgroundColor
-		{
-			get { return backgroundColor; }
-			set { this.RaiseAndSetIfChanged(ref backgroundColor, value); }
-        }
+        [Reactive]
+        public Color BackgroundColor { get; set; }
 
-        public Color BackgroundEndColor
-        {
-            get { return backgroundEndColor; }
-            set { this.RaiseAndSetIfChanged(ref backgroundEndColor, value); }
-        }
+        [Reactive]
+        public Color BackgroundEndColor { get; set; }
 
-        public Shape BackgroundShape
-        {
-            get { return backgroundShape; }
-            set { this.RaiseAndSetIfChanged(ref backgroundShape, value); }
-        }
+        [Reactive]
+        public Shape BackgroundShape { get; set; }
+        
+        [Reactive]
+        public PreviewItemViewModel Preview { get; set; }
 
-        public PreviewItemViewModel Preview
-		{
-			get { return preview; }
-			set { this.RaiseAndSetIfChanged(ref preview, value); }
-        }
+        [Reactive]
+        public GradientMode GradientMode { get; set; }
 
-        public GradientMode GradientMode
-        {
-            get { return gradientMode; }
-            set { this.RaiseAndSetIfChanged(ref gradientMode, value); }
-        }
-
-        public ScreenBackground ScreenBackground
-        {
-            get { return screenBackground; }
-            set { this.RaiseAndSetIfChanged(ref screenBackground, value); }
-        }
+        [Reactive]
+        public ScreenBackground ScreenBackground { get; set; }
 
         #endregion
 

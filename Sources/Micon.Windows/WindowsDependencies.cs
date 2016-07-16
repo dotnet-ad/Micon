@@ -2,23 +2,16 @@
 using Micon.Windows.Bitmaps;
 using Micon.Portable;
 using Micon.Portable.Bitmaps;
+using Autofac;
 
-namespace Micon.Windows
+namespace Micon
 {
-	public class WindowsDependencies : Dependencies
+	public static class WindowsDependencies
 	{
-		public static void Init()
-		{
-			var dep = new WindowsDependencies();
-			dep.Register();
-		}
-
-		private WindowsDependencies() { }
-
-		protected override void RegisterPlatform(Splat.IMutableDependencyResolver locator)
-		{
-			locator.Register<IBitmapLoader>(() => new WindowsBitmapLoader());
-		}
+		public static void RegisterPlatform(this ContainerBuilder container)
+        {
+            container.RegisterType<WindowsBitmapLoader>().As<IBitmapLoader>();
+        }
 	}
 }
 

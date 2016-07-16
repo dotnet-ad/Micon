@@ -1,24 +1,20 @@
 ﻿using System;
 using Micon.Portable.Generation;
+using Autofac;
+using Micon.Portable;
 
-namespace Micon.Portable
+namespace Micon
 {
-	public abstract class Dependencies
+	public static class Dependencies
 	{
-		public void Register()
-		{
-			var locator = Splat.Locator.CurrentMutable;
-			this.RegisterPlatform(locator);
-			this.RegisterShared(locator);
-		}
+		public static void RegisterShared(this ContainerBuilder container)
+        {
+            //Services
+            container.RegisterType<IconGenerator>();
 
-		private void RegisterShared(Splat.IMutableDependencyResolver locator)
-		{
-			locator.Register(() => new IconGenerator());
-		}
-
-		protected abstract void RegisterPlatform(Splat.IMutableDependencyResolver locator);
-
+            //ViewModels
+            container.RegisterType<HomeViewModel>();
+        }
 	}
 }
 

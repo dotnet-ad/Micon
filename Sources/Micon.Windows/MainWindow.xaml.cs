@@ -1,4 +1,5 @@
-﻿using Micon.Portable.Generation;
+﻿using Autofac;
+using Micon.Portable.Generation;
 using Micon.Windows.Bitmaps;
 using System;
 using System.Collections.Generic;
@@ -27,8 +28,8 @@ namespace Micon.Windows
             InitializeComponent();
             Test();
 
-            this.DataContext = new Portable.HomeViewModel();
-
+            this.DataContext = App.Container.Resolve<Portable.HomeViewModel>();
+     
             this.SizeChanged += MainWindow_SizeChanged;
             // Do any additional setup after loading the view.
             this.UpdatePanel(this.RenderSize);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,9 +14,14 @@ namespace Micon.Windows
     /// </summary>
     public partial class App : Application
     {
+        public static IContainer Container { get; private set; }
+
         public App()
         {
-            WindowsDependencies.Init();
+            var builder = new ContainerBuilder();
+            builder.RegisterShared();
+            builder.RegisterPlatform();
+            App.Container = builder.Build();
         }
     }
 }
