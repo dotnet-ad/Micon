@@ -29,7 +29,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="25" />
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.RowSpan="12" Width="1" Fill="{StaticResource MiconSemiLightBackgroundBrush}" HorizontalAlignment="Left" />
+        <Rectangle Grid.RowSpan="14" Width="1" Fill="{StaticResource MiconSemiLightBackgroundBrush}" HorizontalAlignment="Left" />
         <TextBlock Grid.ColumnSpan="2" Margin="10,0,0,0" Foreground="{StaticResource MiconDarkForegroundBrush}" Text="{Binding Title, ElementName=root}" FontSize="13" />
         <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Foreground="{StaticResource MiconDarkForegroundBrush}" Margin="10,0,0,0" Text="{Binding Description, ElementName=root}" Opacity="0.5" FontSize="10" />
 
