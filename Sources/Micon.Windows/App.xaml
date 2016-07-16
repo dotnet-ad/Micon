@@ -10,6 +10,12 @@
 
         <conv:BitmapConverter x:Key="BitmapConverter" />
         <conv:VisibilityConverter x:Key="VisibilityConverter" />
+        <conv:NativeColorConverter x:Key="NativeColorConverter" />
+        <conv:ScreenBackgroundConverter x:Key="ScreenBackgroundConverter" />
+
+        <!-- Colors -->
+        
+        <Color x:Key="MiconAccentColor">#4599d9</Color>
 
         <!-- Brushes -->
 
@@ -19,8 +25,8 @@
         <SolidColorBrush x:Key="MiconLightBackgroundBrush">#ffffff</SolidColorBrush>
         <SolidColorBrush x:Key="MiconDarkBackgroundBrush">#2d2a33</SolidColorBrush>
         <SolidColorBrush x:Key="MiconSemiDarkBackgroundBrush">#6f6b76</SolidColorBrush>
-        <SolidColorBrush x:Key="MiconAccentBrush">#4599d9</SolidColorBrush>
-        
+        <SolidColorBrush x:Key="MiconAccentBrush" Color="{StaticResource MiconAccentColor}" />
+
         <!-- Styles -->
         
         <Style TargetType="Button">

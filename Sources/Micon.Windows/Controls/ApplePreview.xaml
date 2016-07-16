@@ -52,8 +52,9 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Image Grid.ColumnSpan="9" Grid.RowSpan="9" Stretch="UniformToFill" Source="{Binding ScreenBackground, ElementName=root}" />
         <Image Grid.ColumnSpan="9" Grid.RowSpan="9" Stretch="UniformToFill" Source="/Assets/device_iphone.png" />
-        <TextBlock Visibility="{Binding Icon, ElementName=root, Converter={StaticResource VisibilityConverter}}" Text="App" Grid.Row="2" Grid.Column="1" TextAlignment="Center" Foreground="White" FontSize="9" Margin="0,2,0,0" FontWeight="Light" Grid.RowSpan="2" />
+        <TextBlock Visibility="{Binding Icon, ElementName=root, Converter={StaticResource VisibilityConverter}}" Foreground="{Binding ScreenForeground,ElementName=root}" Text="App" Grid.Row="2" Grid.Column="1" TextAlignment="Center" FontSize="9" Margin="0,2,0,0" FontWeight="Light" Grid.RowSpan="2" />
         <Path x:Name="iconImage" Grid.Row="1" Grid.Column="1"  Stretch="Uniform" Data="m 28.496657,925.78943 70.285908,0 c 14.315585,0 25.840405,11.83742 25.840405,26.54131 l 0,66.88406 c 0,14.7039 -11.52482,26.5413 -25.840405,26.5413 l -70.285908,0 c -14.315585,0 -25.8404065,-11.8374 -25.8404065,-26.5413 l 0,-66.88406 c 0,-14.70389 11.5248215,-26.54131 25.8404065,-26.54131 z">
             <Path.Fill>
                 <ImageBrush Stretch="Fill" ImageSource="{Binding Icon, ElementName=root, Converter={StaticResource BitmapConverter}}" />

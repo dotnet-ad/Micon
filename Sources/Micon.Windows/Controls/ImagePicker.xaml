@@ -14,16 +14,38 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="5" />
             <RowDefinition Height="25" />
+            <RowDefinition Height="90" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="25" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="25" />
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.RowSpan="5" Width="1" Fill="{StaticResource MiconSemiLightBackgroundBrush}" HorizontalAlignment="Left" />
+        <Rectangle Grid.RowSpan="10" Width="1" Fill="{StaticResource MiconSemiLightBackgroundBrush}" HorizontalAlignment="Left" />
         <TextBlock Grid.ColumnSpan="2" Margin="10,0,0,0" Foreground="{StaticResource MiconDarkForegroundBrush}" Text="{Binding Title, ElementName=root}" FontSize="13" />
         <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Foreground="{StaticResource MiconDarkForegroundBrush}" Margin="10,0,0,0" Text="{Binding Description, ElementName=root}" Opacity="0.5" FontSize="10" />
         
-            <TextBox Margin="10,0,0,0" Grid.Row="4" Text="{Binding Path, ElementName=root}" VerticalContentAlignment="Center" Background="{StaticResource MiconSemiLightBackgroundBrush}" />
-                <Button Grid.Row="4" Grid.Column="1" Content="O" Click="Button_Click" />
+        <TextBox Margin="10,0,0,0" Grid.Row="4" Text="{Binding Path, ElementName=root}" VerticalContentAlignment="Center" Background="{StaticResource MiconSemiLightBackgroundBrush}" />
+        <Button Grid.Row="4" Grid.Column="1" Content="O" Click="Button_Click" />
+
+        <Border Grid.Row="5" Margin="10,0,0,0" Grid.ColumnSpan="2">
+            <Border.Background>
+                <ImageBrush ImageSource="/Assets/image_template.png" TileMode="FlipY" Stretch="UniformToFill" AlignmentY="Top" Viewport="0,0,20,16" ViewportUnits="Absolute" />
+            </Border.Background>
+
+            <Image Margin="5" x:Name="preview" />
+
+        </Border>
+        
+        <TextBlock Grid.Row="7" Grid.ColumnSpan="2" Foreground="{StaticResource MiconDarkForegroundBrush}" Margin="10,0,0,0" Text="{Binding SizeDescription, ElementName=root}" Opacity="0.5" FontSize="10" />
+        <Slider Grid.Row="9" Margin="10,0,0,0" IsSelectionRangeEnabled="True" ValueChanged="Slider_ValueChanged" Minimum="0.2"  Maximum="1.0" Value="1.0" Grid.ColumnSpan="2" SelectionEnd="{Binding Value, RelativeSource={RelativeSource Self}}">
+            <Slider.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{StaticResource MiconAccentColor}" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlDarkDarkBrushKey}" Color="#cccccc" />
+            </Slider.Resources>
+        </Slider>
     </Grid>
 </UserControl>

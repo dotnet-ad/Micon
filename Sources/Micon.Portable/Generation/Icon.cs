@@ -7,12 +7,11 @@ namespace Micon.Portable.Generation
 	{
 		public Icon(string name, int size) : this(name, size, size)
 		{
-
 		}
 
 		public Icon(string name, int width, int height)
-		{
-			this.Name = name;
+        {
+            this.Name = name;
 			this.Width = width;
 			this.Height = height;
 
@@ -25,10 +24,16 @@ namespace Micon.Portable.Generation
 		public int Width { get; set; }
 
 		public int Height { get; set; }
+        
+        public Rectangle ImageArea { get; }
 
-		public Rectangle ImageArea { get; }
+		public Color BackgroundColor { get; set; }
 
-		public bool HasBackground { get; set; }
-	}
+        public Color BackgroundEndColor { get; set; }
+
+        public Shape BackgroundShape { get; set; }
+        
+        public bool HasBorder { get; set; }
+    }
 }
 

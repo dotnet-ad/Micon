@@ -32,6 +32,11 @@
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Extensions\DoubleExtensions.cs" />
+    <Compile Include="Generation\Color.cs" />
+    <Compile Include="Generation\GradientMode.cs" />
+    <Compile Include="Generation\ScreenBackground.cs" />
+    <Compile Include="Generation\Shape.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bitmaps\IBitmap.cs" />
     <Compile Include="Bitmaps\IBitmapLoader.cs" />

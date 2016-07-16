@@ -16,7 +16,11 @@
 
 		void Draw(IBitmap other, Rectangle area);
 
-		Task Save();
+        void DrawCircle(Color color, Color endColor, bool border);
+
+        void DrawRectangle(Color color, Color endColor, bool border, double cornerRadius);
+
+        Task Save();
 	}
 }
 

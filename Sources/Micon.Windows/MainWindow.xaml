@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Micon.Windows"
         xmlns:controls="clr-namespace:Micon.Windows.Controls"
         mc:Ignorable="d"
-        Title="Micon" Height="512" Width="800" MinHeight="512" MinWidth="800">
+        Title="Micon" Height="580" Width="800" MinHeight="580" MinWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400" />
@@ -15,8 +15,8 @@
 
         <ScrollViewer>
             <StackPanel Margin="20">
-                <controls:ImagePicker Title="Logo" Description="The main logo of your icon" Path="{Binding LogoPath, Mode=TwoWay}" />
-                <controls:ImagePicker Title="Background" Description="The background image of your icon. It will be stretched for all tiles." Margin="0,20,0,0" />
+                <controls:ImagePicker Title="Logo" Description="The main logo of your icon" SizeDescription="Select the size of the logo" Path="{Binding LogoPath, Mode=TwoWay}" Scale="{Binding LogoScale, Mode=TwoWay}" />
+                <controls:BackgroundPicker Title="Background" Description="The background image of your icon. It will be stretched for all tiles." AndroidDescription="Select the Android icon shape" Shape="{Binding BackgroundShape, Mode=TwoWay}" EndColor="{Binding BackgroundEndColor, Mode=TwoWay, Converter={StaticResource NativeColorConverter}}" Color="{Binding BackgroundColor, Mode=TwoWay, Converter={StaticResource NativeColorConverter}}" GradientMode="{Binding GradientMode, Mode=TwoWay}" Margin="0,20,0,0" />
                 <Button Content="EXPORT" Margin="10,20,0,0" Padding="5" />
             </StackPanel>
         </ScrollViewer>

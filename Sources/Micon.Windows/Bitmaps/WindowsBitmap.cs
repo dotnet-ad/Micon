@@ -2,6 +2,7 @@
 using Micon.Portable.Bitmaps;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -89,6 +90,71 @@ namespace Micon.Windows.Bitmaps
                 png.Save(stream);
             }
             return Task.FromResult(true);
+        }
+        
+        private Brush CreateBrush(Micon.Portable.Generation.Color color, Micon.Portable.Generation.Color endColor)
+        {
+            var baseColor = color.ToNative();
+
+            if(endColor == null)
+                return new SolidColorBrush(baseColor);
+            
+            return new LinearGradientBrush(baseColor, endColor.ToNative(), 95);
+        }
+
+        private Brush CreateBorderBrush(Micon.Portable.Generation.Color color, Micon.Portable.Generation.Color endColor)
+        {
+            var l = color.Lightness;
+
+            var darkColor = color.Lerp(Micon.Portable.Generation.Color.FromRgb(0, 0, 0), l * 0.70).ToNative();
+
+            if (endColor == null)
+                return new SolidColorBrush(darkColor);
+
+            var endDarkColor = endColor.Lerp(Micon.Portable.Generation.Color.FromRgb(0, 0, 0), l * 0.90).ToNative();
+
+            return new LinearGradientBrush(darkColor, endDarkColor, 95);
+        }
+
+        public void DrawCircle(Micon.Portable.Generation.Color color, Micon.Portable.Generation.Color endColor, bool border)
+        {
+            var circle = new System.Windows.Shapes.Ellipse() {
+                Fill = CreateBrush(color, endColor),
+                Stretch = Stretch.Fill,
+                Width = this.Width,
+                Height = this.Height,
+            };
+
+            if(border)
+            {
+                circle.Stroke = this.CreateBorderBrush(color, endColor);
+                circle.StrokeThickness = 2.0;
+            }
+
+            circle.Measure(new System.Windows.Size(this.Width, this.Height));
+            circle.Arrange(new Rect(0, 0, this.Width, this.Height));
+            this.Image.Render(circle);
+        }
+
+        public void DrawRectangle(Micon.Portable.Generation.Color color, Micon.Portable.Generation.Color endColor, bool border, double cornerRadius)
+        {
+            var rect = new Border()
+            {
+                Background = CreateBrush(color, endColor),
+                CornerRadius = new CornerRadius(cornerRadius),
+                Width = this.Width,
+                Height = this.Height,
+            };
+
+            if (border)
+            {
+                rect.BorderBrush = this.CreateBorderBrush(color,endColor);
+                rect.BorderThickness = new Thickness(2.0);
+            }
+
+            rect.Measure(new System.Windows.Size(this.Width, this.Height));
+            rect.Arrange(new Rect(0, 0, this.Width, this.Height));
+            this.Image.Render(rect);
         }
     }
 }

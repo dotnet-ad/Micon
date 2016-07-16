@@ -52,8 +52,9 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Image Grid.ColumnSpan="9" Grid.RowSpan="9" Stretch="UniformToFill" Source="{Binding ScreenBackground, ElementName=root}" />
         <Image Grid.ColumnSpan="9" Grid.RowSpan="9" Stretch="UniformToFill" Source="/Assets/device_nexus.png" />
-        <TextBlock Visibility="{Binding Icon, ElementName=root, Converter={StaticResource VisibilityConverter}}" Text="App" Grid.Row="2" Grid.Column="1" TextAlignment="Center" Foreground="White" FontSize="10" Margin="0,2,0,0" FontWeight="Light" Grid.RowSpan="2" />
+        <TextBlock Visibility="{Binding Icon, ElementName=root, Converter={StaticResource VisibilityConverter}}" Foreground="{Binding ScreenForeground,ElementName=root}" Text="App" Grid.Row="2" Grid.Column="1" TextAlignment="Center" FontSize="10" Margin="0,2,0,0" FontWeight="Light" Grid.RowSpan="2" />
         <Rectangle x:Name="iconImage" Grid.Row="1" Grid.Column="1" Stretch="Uniform">
             <Rectangle.Fill>
                 <ImageBrush Stretch="Fill" AlignmentX="Center" AlignmentY="Center" ImageSource="{Binding Icon, ElementName=root, Converter={StaticResource BitmapConverter}}" />

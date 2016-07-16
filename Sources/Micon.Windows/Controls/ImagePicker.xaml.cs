@@ -40,15 +40,31 @@ namespace Micon.Windows.Controls
         }
         
         public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
-        
+
+        public string SizeDescription
+        {
+            get { return (string)GetValue(SizeDescriptionProperty); }
+            set { SetValue(SizeDescriptionProperty, value); }
+        }
+
+        public static readonly DependencyProperty SizeDescriptionProperty = DependencyProperty.Register("SizeDescription", typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
+
         public string Path
         {
             get { return (string)GetValue(PathProperty); }
             set { SetValue(PathProperty, value); }
         }
         
-        public static readonly DependencyProperty PathProperty =  DependencyProperty.Register("Path", typeof(string), typeof(ImagePicker), new FrameworkPropertyMetadata(null,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        
+        public static readonly DependencyProperty PathProperty =  DependencyProperty.Register("Path", typeof(string), typeof(ImagePicker), new FrameworkPropertyMetadata(null,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnPathChanged));
+
+        public double Scale
+        {
+            get { return (double)GetValue(ScaleProperty); }
+            set { SetValue(ScaleProperty, value); }
+        }
+
+        public static readonly DependencyProperty ScaleProperty = DependencyProperty.Register("Scale", typeof(double), typeof(ImagePicker), new FrameworkPropertyMetadata(1.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -61,6 +77,18 @@ namespace Micon.Windows.Controls
             {
                 this.Path = dlg.FileName;
             }
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.Scale = e.NewValue;
+        }
+
+        private static void OnPathChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            var picker = source as ImagePicker;
+            picker.preview.Source = new BitmapImage(new Uri(e.NewValue as string));
+
         }
     }
 }

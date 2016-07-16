@@ -18,12 +18,14 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="350" />
         </Grid.RowDefinitions>
+
+        <local:ScreenBackgroundPicker Grid.RowSpan="2" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" ScreenBackground="{Binding ScreenBackground, Mode=TwoWay}" />
         
         <local:SystemSelector Grid.Column="1" SystemMode="iOS" />
-        <local:ApplePreview Grid.Column="1" x:Name="previewIos" Icon="{Binding Preview.Apple}" Grid.Row="1" IsAnimatedVisible="True" />
+        <local:ApplePreview Grid.Column="1" x:Name="previewIos" ScreenForeground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" Icon="{Binding Preview.Apple}" ScreenBackground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" Grid.Row="1" IsAnimatedVisible="True" />
 
         <local:SystemSelector Grid.Column="3" SystemMode="Android" />
-        <local:AndroidPreview Grid.Column="3" IsAnimatedVisible="True" Icon="{Binding Preview.Android}" x:Name="previewAndroid" Grid.Row="1" />
+        <local:AndroidPreview Grid.Column="3" IsAnimatedVisible="True" ScreenForeground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" Icon="{Binding Preview.Android}" ScreenBackground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" x:Name="previewAndroid" Grid.Row="1" />
             
     </Grid>
 </UserControl>

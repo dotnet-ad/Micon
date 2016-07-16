@@ -11,8 +11,9 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="350" />
         </Grid.RowDefinitions>
+        <local:ScreenBackgroundPicker Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" ScreenBackground="{Binding ScreenBackground, Mode=TwoWay}" />
         <local:SystemSelector SelectedItemChanged="SystemSelector_SelectedItemChanged" />
-        <local:ApplePreview x:Name="previewIos" Icon="{Binding Preview.Apple}" Grid.Row="1" IsAnimatedVisible="True" />
-        <local:AndroidPreview x:Name="previewAndroid" Icon="{Binding Preview.Android}" Grid.Row="1" />
+        <local:ApplePreview x:Name="previewIos" Icon="{Binding Preview.Apple}" ScreenForeground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" ScreenBackground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" Grid.Row="1" IsAnimatedVisible="True" />
+        <local:AndroidPreview x:Name="previewAndroid" Icon="{Binding Preview.Android}" ScreenForeground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" ScreenBackground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" Grid.Row="1" />
     </Grid>
 </UserControl>

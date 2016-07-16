@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Micon.Portable.Bitmaps;
 using Micon.Portable.Generation;
 using ReactiveUI;
+using System.Reactive.Linq;
 
 namespace Micon.Portable
 {
@@ -11,6 +12,9 @@ namespace Micon.Portable
 	{
 		public HomeViewModel(IBitmapLoader loader = null, IconGenerator generator = null)
 		{
+            this.LogoScale = 1.0;
+            this.BackgroundColor = Color.FromRgb(0x45, 0x99, 0xd9);
+            
 			// Dependencies
 			var locator = Splat.Locator.Current;
 			this.loader = loader ?? locator.GetService<IBitmapLoader>();
@@ -18,12 +22,18 @@ namespace Micon.Portable
 
 			// Reactive
 			this.LoadLogoCommand = ReactiveCommand.CreateAsyncTask(ExecuteLoadImageCommand);
-			this.LoadBackgroundCommand = ReactiveCommand.CreateAsyncTask(ExecuteLoadImageCommand);
 			this.LoadLogoCommand.Subscribe((img) => this.Logo = img);
-			this.LoadBackgroundCommand.Subscribe((img) => this.Background = img);
-            this.WhenAnyValue((x) => x.Logo, (x) => x.Background, (logo, bg) => new PreviewItemViewModel(this.generator, logo, bg)).Subscribe((o) => this.Preview = o);// .ToProperty(this,(x) => x.Preview);
+            this.WhenAnyValue(
+                (x) => x.Logo, 
+                (x) => x.LogoScale, 
+                (x) => x.BackgroundColor, 
+                (x) => x.BackgroundEndColor, 
+                (x) => x.BackgroundShape, 
+                (x) => x.GradientMode,
+                (logo, scale, color,endColor, shape,gradient) => new PreviewItemViewModel(this.generator, logo, scale, color,endColor, gradientMode, shape))
+              //.Throttle(TimeSpan.FromMilliseconds(200))
+              .Subscribe((o) => this.Preview = o);// .ToProperty(this,(x) => x.Preview);
             this.WhenAnyValue((x) => x.Logo).Subscribe((i) => this.RaisePropertyChanged(nameof(LogoPath)));
-            this.WhenAnyValue((x) => x.Background).Subscribe((i) => this.RaisePropertyChanged(nameof(BackgroundPath)));
         }
 
         #region Fields
@@ -34,23 +44,28 @@ namespace Micon.Portable
 
 		private IBitmap logo;
 
-		private IBitmap background;
+        private double logoScale;
 
-		private PreviewItemViewModel preview;
+        private Color backgroundColor;
 
-		#endregion
+        private Color backgroundEndColor;
 
-		#region Bound properties
+        private Shape backgroundShape;
+
+        private GradientMode gradientMode;
+
+        private PreviewItemViewModel preview;
+
+        private ScreenBackground screenBackground;
+
+        #endregion
+
+        #region Bound properties
 
         public string LogoPath
         {
             get { return this.Logo?.Path; }
             set { this.LoadLogoCommand.Execute(value); }
-        }
-        public string BackgroundPath
-        {
-            get { return this.Background?.Path; }
-            set { this.LoadBackgroundCommand.Execute(value); }
         }
 
         public IBitmap Logo
@@ -59,25 +74,53 @@ namespace Micon.Portable
 			set { this.RaiseAndSetIfChanged(ref logo, value); }
 		}
 
-		public IBitmap Background
-		{
-			get { return background; }
-			set { this.RaiseAndSetIfChanged(ref background, value); }
-		}
+        public double LogoScale
+        {
+            get { return logoScale; }
+            set { this.RaiseAndSetIfChanged(ref logoScale, value); }
+        }
 
-		public PreviewItemViewModel Preview
+        public Color BackgroundColor
+		{
+			get { return backgroundColor; }
+			set { this.RaiseAndSetIfChanged(ref backgroundColor, value); }
+        }
+
+        public Color BackgroundEndColor
+        {
+            get { return backgroundEndColor; }
+            set { this.RaiseAndSetIfChanged(ref backgroundEndColor, value); }
+        }
+
+        public Shape BackgroundShape
+        {
+            get { return backgroundShape; }
+            set { this.RaiseAndSetIfChanged(ref backgroundShape, value); }
+        }
+
+        public PreviewItemViewModel Preview
 		{
 			get { return preview; }
 			set { this.RaiseAndSetIfChanged(ref preview, value); }
-		}
+        }
 
-		#endregion
+        public GradientMode GradientMode
+        {
+            get { return gradientMode; }
+            set { this.RaiseAndSetIfChanged(ref gradientMode, value); }
+        }
 
-		#region Bound commands
+        public ScreenBackground ScreenBackground
+        {
+            get { return screenBackground; }
+            set { this.RaiseAndSetIfChanged(ref screenBackground, value); }
+        }
 
-		public ReactiveCommand<IBitmap> LoadLogoCommand { get; private set; }
+        #endregion
 
-		public ReactiveCommand<IBitmap> LoadBackgroundCommand { get; private set; }
+        #region Bound commands
+
+        public ReactiveCommand<IBitmap> LoadLogoCommand { get; private set; }
 
 		public ReactiveCommand<PreviewItemViewModel> PreviewCommand { get; private set; }
 
