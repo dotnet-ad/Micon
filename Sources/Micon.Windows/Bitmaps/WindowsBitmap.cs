@@ -62,7 +62,7 @@ namespace Micon.Windows.Bitmaps
             var file = new System.IO.FileInfo(path);
             if (!file.Exists)
             {
-                file.Create();
+                file.Create().Dispose();
             }
         }
 

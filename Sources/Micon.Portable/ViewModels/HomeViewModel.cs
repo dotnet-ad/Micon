@@ -118,7 +118,8 @@ namespace Micon.Portable
             var output = parameter as string;
 
             var bitmaps = this.icons.Select((x) => new { Icon = x, Bitmap = Generate(x) });
-            var saves = bitmaps.Select((x) => x.Bitmap.Save(Path.Combine(output, $"{x.Icon.Name}")));
+
+            var saves = bitmaps.Select((x) => x.Bitmap.Save(Path.Combine(output, $"{x.Icon.Name}.png")));
 
             await Task.WhenAll(saves);
 

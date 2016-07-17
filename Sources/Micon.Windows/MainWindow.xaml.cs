@@ -26,7 +26,6 @@ namespace Micon.Windows
         public MainWindow()
         {
             InitializeComponent();
-            Test();
 
             this.DataContext = App.Container.Resolve<Portable.HomeViewModel>();
      
@@ -58,9 +57,19 @@ namespace Micon.Windows
             }
         }
 
-        private async void Test()
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            var result = dialog.ShowDialog();
+
+            if(result == System.Windows.Forms.DialogResult.OK)
+            {
+                var vm = this.DataContext as Portable.HomeViewModel;
+                if(vm.ExportCommand.CanExecute(dialog.SelectedPath))
+                {
+                    vm.ExportCommand.Execute(dialog.SelectedPath);
+                }
+            }
         }
     }
 }
