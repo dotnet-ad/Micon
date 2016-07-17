@@ -8,6 +8,7 @@ namespace Micon.Portable.Generation
 {
     public enum Shape
     {
+        Unavailable,
         Rectangle,
         RoundedRectangle,
         Circle,

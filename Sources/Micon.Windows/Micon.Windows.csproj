@@ -57,6 +57,10 @@
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ReactiveUI, Version=6.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\reactiveui-core.6.5.0\lib\Net45\ReactiveUI.dll</HintPath>
       <Private>True</Private>
@@ -239,6 +243,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\WindowsPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -273,6 +281,9 @@
     </Compile>
     <Compile Include="Controls\WidePreviewPanel.xaml.cs">
       <DependentUpon>WidePreviewPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WindowsPreview.xaml.cs">
+      <DependentUpon>WindowsPreview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BitmapConverter.cs" />
     <Compile Include="Converters\NativeColorConverter.cs" />
@@ -349,6 +360,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\icon_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\device_lumia.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

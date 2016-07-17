@@ -20,6 +20,7 @@ namespace Micon.Windows.Controls
         All,
         Android,
         iOS,
+        Windows,
     }
 
     /// <summary>
@@ -57,24 +58,36 @@ namespace Micon.Windows.Controls
             var control = source as SystemSelector;
             var mode = (SystemMode)e.NewValue;
 
-            control.ios.Visibility = mode != SystemMode.Android ? Visibility.Visible : Visibility.Collapsed;
-            control.android.Visibility = mode != SystemMode.iOS ? Visibility.Visible : Visibility.Collapsed;
+            control.ios.Visibility = mode == SystemMode.iOS || mode == SystemMode.All ? Visibility.Visible : Visibility.Collapsed;
+            control.android.Visibility = mode == SystemMode.Android || mode == SystemMode.All ? Visibility.Visible : Visibility.Collapsed;
+            control.windows.Visibility = mode == SystemMode.Windows || mode == SystemMode.All ? Visibility.Visible : Visibility.Collapsed;
 
-            if(mode == SystemMode.Android)
+            if(mode == SystemMode.All)
             {
-                control.SelectedIndex = 1;
-                control.android.Margin = new Thickness(0);
-            }
-            else if (mode == SystemMode.iOS)
-            {
-                control.SelectedIndex = 0;
-                control.android.Margin = new Thickness(0);
+                control.android.Margin = new Thickness(20, 0, 0, 0);
+                control.windows.Margin = new Thickness(20, 0, 0, 0);
             }
             else
             {
-                control.android.Margin = new Thickness(10,0,0,0);
+                control.android.Margin = new Thickness(0);
+                control.windows.Margin = new Thickness(0);
+
+                if (mode == SystemMode.Android)
+                {
+                    control.SelectedIndex = 1;
+                }
+                else if (mode == SystemMode.iOS)
+                {
+                    control.SelectedIndex = 0;
+                }
+                else if (mode == SystemMode.Windows)
+                {
+                    control.SelectedIndex = 2;
+                }
             }
         }
+
+        private static string[] labels = new[] { "iOS", "Android", "Windows" };
 
         private static void OnSelectedIndexPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
@@ -82,14 +95,12 @@ namespace Micon.Windows.Controls
             var index = (int)e.NewValue;
 
             var isIos = index == 0;
-            control.ios.Fill = isIos ? control.selectedBrush : control.unselectedBrush;
-            control.android.Fill = !isIos ? control.selectedBrush : control.unselectedBrush;
-            control.label.Text = isIos ? "iOS" : "Android";
+            control.ios.Fill = index == 0 ? control.selectedBrush : control.unselectedBrush;
+            control.android.Fill = index == 1 ? control.selectedBrush : control.unselectedBrush;
+            control.windows.Fill = index == 2 ? control.selectedBrush : control.unselectedBrush;
+            control.label.Text = labels[index];
 
-            if (control.SelectedItemChanged != null)
-            {
-                control.SelectedItemChanged(control, index);
-            }
+            control.SelectedItemChanged?.Invoke(control, index);
         }
 
         public event EventHandler<int> SelectedItemChanged;
@@ -99,7 +110,7 @@ namespace Micon.Windows.Controls
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var selected = sender as Path;
-            this.SelectedIndex = (this.ios == selected) ? 0 : 1;
+            this.SelectedIndex = (this.ios == selected) ? 0 : ((this.android == selected) ? 1 : 2);
         }
     }
 }

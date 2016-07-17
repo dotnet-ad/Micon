@@ -34,7 +34,7 @@ namespace Micon.Windows
             // Do any additional setup after loading the view.
             this.UpdatePanel(this.RenderSize);
         }
-        const int min = 1200;
+        const int min = 1375;
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -60,24 +60,7 @@ namespace Micon.Windows
 
         private async void Test()
         {
-            try
-            {
-                var loader = new WindowsBitmapLoader();
-                var gen = new IconGenerator(loader);
-                await gen.Generate(@"C:\test\profile.jpg", @"C:\test\profile.jpg", new Portable.Generation.SystemIcons()
-                {
-                    Name = "iOS",
-                    Icons = new System.Collections.Generic.List<Icon>
-                    {
-                        new Icon("test16.png",16),
-                        new Icon("test150.png",150,100),
-                    }
-                });
-            }
-            catch (Exception ex)
-            {
-
-            }
+            
         }
     }
 }

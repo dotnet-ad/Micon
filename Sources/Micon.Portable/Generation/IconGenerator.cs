@@ -11,36 +11,14 @@ namespace Micon.Portable.Generation
 		public IconGenerator(IBitmapLoader loader)
 		{
 			// Dependencies
-			var locator = Splat.Locator.Current;
 			this.loader = loader;
 		}
 
 		readonly IBitmapLoader loader;
-
-		public async Task<IBitmap[]> Generate(string hdImagePath, string outputFolder, Generation.SystemIcons system)
+     
+		public IBitmap GenerateIcon(IBitmap hdImage, Icon icon)
 		{
-			var bitmap = await this.loader.LoadAsync(hdImagePath);
-			return await this.Generate(bitmap, outputFolder, system);
-		}
-
-		public Task<IBitmap[]> Generate(IBitmap hdImage, string outputFolder, Generation.SystemIcons system)
-		{
-			var tasks = system.Icons.Select((icon) => GenerateIcon(hdImage,outputFolder,system,icon));
-			return Task.WhenAll(tasks);
-		}
-
-		public async Task<IBitmap> GenerateIcon(IBitmap hdImage, string outputFolder, Generation.SystemIcons system, Icon icon)
-		{
-			outputFolder = outputFolder.TrimEnd(new char[] { '/', '\\' });
-			var path = $"{outputFolder}/{system.Name}/{icon.Name}";
-			var result = await this.GenerateIcon(path, hdImage,  icon);
-			await result.Save();
-			return result;
-		}
-
-		public async Task<IBitmap> GenerateIcon(string path, IBitmap hdImage, Icon icon)
-		{
-			var result = await this.loader.Create(path, icon.Width, icon.Height);
+			var result = this.loader.Create(icon.Width, icon.Height);
             
             if (icon.BackgroundColor != null)
             {
@@ -57,9 +35,22 @@ namespace Micon.Portable.Generation
                         break;
                 }
             }
-            
-            if(hdImage != null)
-			    result.Draw(hdImage, icon.ImageArea);
+
+            if (hdImage != null)
+            {
+                var a = icon.ImageArea;
+
+                var cx = a.X + a.Width / 2;
+                var cy = a.Y + a.Height / 2;
+
+                var area = new Rectangle(a.X, a.Y, a.Width, a.Height);
+                area.Width = (int)(area.Width * icon.Scale);
+                area.Height = (int)(area.Height * icon.Scale);
+                area.X = cx - (area.Width / 2);
+                area.Y = cy - (area.Height / 2);
+
+                result.Draw(hdImage, area);
+            }
 
 			return result;
 		}

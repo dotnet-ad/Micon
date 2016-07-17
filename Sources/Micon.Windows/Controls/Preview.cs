@@ -31,12 +31,11 @@ namespace Micon.Windows.Controls
             set { SetValue(IconProperty, value); }
         }
 
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(nameof(Icon), typeof(IBitmap), typeof(Preview), new PropertyMetadata(null));
+
         public static readonly DependencyProperty ScreenForegroundProperty = DependencyProperty.Register(nameof(ScreenForeground), typeof(Brush), typeof(Preview), new PropertyMetadata(new SolidColorBrush(Colors.White)));
 
-
         public static readonly DependencyProperty ScreenBackgroundProperty = DependencyProperty.Register(nameof(ScreenBackground), typeof(string), typeof(Preview), new PropertyMetadata(null));
-        
-        public static readonly DependencyProperty IconProperty =  DependencyProperty.Register(nameof(Icon), typeof(IBitmap), typeof(Preview), new PropertyMetadata(null));
         
         public static readonly DependencyProperty IsAnimatedVisibleProperty = DependencyProperty.Register(nameof(IsAnimatedVisible), typeof(bool), typeof(Preview), new FrameworkPropertyMetadata(false, OnVisiblePropertyChanged));
 

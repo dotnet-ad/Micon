@@ -16,15 +16,13 @@ namespace Micon.Windows.Bitmaps
 {
     public class WindowsBitmap : IBitmap
     {
-        public WindowsBitmap(string path, int width, int height)
+        public WindowsBitmap(int width, int height)
         {
-            this.Path = path;
             this.Image = new RenderTargetBitmap(width, height,96d,96d,PixelFormats.Default);
         }
 
         public WindowsBitmap(string path)
         {
-            this.Path = path;
             var bi = new BitmapImage(new Uri(path));
             this.Image = new RenderTargetBitmap((int)bi.Width, (int)bi.Height, 96d, 96d, PixelFormats.Default);
             var img = new Image() { Source = bi, Stretch = Stretch.Fill };
@@ -34,9 +32,7 @@ namespace Micon.Windows.Bitmaps
         }
 
         public RenderTargetBitmap Image { get; private set; }
-
-        public string Path { get; private set; }
-
+       
         public int Width
         {
             get { return (int)this.Image.Width; }
@@ -80,12 +76,12 @@ namespace Micon.Windows.Bitmaps
             this.Image.Render(img);
         }
 
-        public Task Save()
+        public Task Save(string path)
         {
             var png = new PngBitmapEncoder();
             png.Frames.Add(BitmapFrame.Create(this.Image));
-            CreateIfNotExists(this.Path);
-            using (var stream = File.Create(this.Path))
+            CreateIfNotExists(path);
+            using (var stream = File.Create(path))
             {
                 png.Save(stream);
             }

@@ -15,5 +15,6 @@
         <local:SystemSelector SelectedItemChanged="SystemSelector_SelectedItemChanged" />
         <local:ApplePreview x:Name="previewIos" Icon="{Binding Preview.Apple}" ScreenForeground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" ScreenBackground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" Grid.Row="1" IsAnimatedVisible="True" />
         <local:AndroidPreview x:Name="previewAndroid" Icon="{Binding Preview.Android}" ScreenForeground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" ScreenBackground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" Grid.Row="1" />
+        <local:WindowsPreview x:Name="previewWindows" Icon="{Binding Preview.Windows}" WideIcon="{Binding Preview.WindowsWide}" SmallIcon="{Binding Preview.WindowsSmall}" ScreenForeground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" ScreenBackground="{Binding ScreenBackground, Converter={StaticResource ScreenBackgroundConverter}}" Grid.Row="1" />
     </Grid>
 </UserControl>

@@ -1,0 +1,5 @@
+﻿[
+  { "Name": "ldpi/icon", "Width" : 36, "Height" :  36, "BackgroundShape" : "Rectangle" },
+  { "Name": "hdpi/icon", "Width" : 72, "Height" :  72, "BackgroundShape" : "Rectangle" },
+  { "Name": "xhdpi/icon", "Width" : 96, "Height" :  96, "BackgroundShape" : "Rectangle" }
+]

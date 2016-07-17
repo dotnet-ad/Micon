@@ -6,8 +6,6 @@
 
 	public interface IBitmap
 	{
-		string Path { get; }
-
 		int Width { get; }
 
 		int Height { get; }
@@ -20,7 +18,7 @@
 
         void DrawRectangle(Color color, Color endColor, bool border, double cornerRadius);
 
-        Task Save();
+        Task Save(string path);
 	}
 }
 

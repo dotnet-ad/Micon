@@ -1,0 +1,6 @@
+﻿[
+  { "Name": "icon", "Width" : 120, "Height" :  120, "Scale" : 0.6 },
+  { "Name": "icon.120", "Width" : 180, "Height" :  180 },
+  { "Name": "small", "Width" : 120, "Height" :  120 },
+  { "Name": "wide", "Width" : 240, "Height" :  120, "Scale" : 0.6 }
+]

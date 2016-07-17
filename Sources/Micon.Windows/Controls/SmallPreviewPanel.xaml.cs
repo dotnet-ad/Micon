@@ -29,6 +29,7 @@ namespace Micon.Windows.Controls
         {
             this.previewIos.IsAnimatedVisible = e == 0;
             this.previewAndroid.IsAnimatedVisible = e == 1;
+            this.previewWindows.IsAnimatedVisible = e == 2;
         }
     }
 }
