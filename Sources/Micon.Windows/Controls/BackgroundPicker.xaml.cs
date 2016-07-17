@@ -23,8 +23,10 @@ namespace Micon.Windows.Controls
         public BackgroundPicker()
         {
             InitializeComponent();
+            this.shapes.SelectedIndex = 0;
+            this.gradients.SelectedIndex = 0;
         }
-
+        
         public string Title
         {
             get { return (string)GetValue(TitleProperty); }
@@ -79,7 +81,7 @@ namespace Micon.Windows.Controls
             set { SetValue(ShapeProperty, value); }
         }
 
-        public static readonly DependencyProperty ShapeProperty = DependencyProperty.Register("Shape", typeof(Portable.Generation.Shape), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Generation.Shape.Rectangle, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty ShapeProperty = DependencyProperty.Register("Shape", typeof(Portable.Generation.Shape), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Generation.Shape.Rectangle, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnShapeChanged));
 
         public Portable.Generation.GradientMode GradientMode
         {
@@ -87,8 +89,16 @@ namespace Micon.Windows.Controls
             set { SetValue(GradientModeProperty, value); }
         }
 
-        public static readonly DependencyProperty GradientModeProperty = DependencyProperty.Register("GradientMode", typeof(Portable.Generation.GradientMode), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Generation.GradientMode.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        
+        public static readonly DependencyProperty GradientModeProperty = DependencyProperty.Register("GradientMode", typeof(Portable.Generation.GradientMode), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Generation.GradientMode.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnGradientChanged));
+
+        public bool HasBorder
+        {
+            get { return (bool)GetValue(HasBorderProperty); }
+            set { SetValue(HasBorderProperty, value); }
+        }
+
+        public static readonly DependencyProperty HasBorderProperty = DependencyProperty.Register(nameof(HasBorder), typeof(bool), typeof(BackgroundPicker), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         private void ClrPcker_Background_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             if(e.NewValue != null)
@@ -135,6 +145,42 @@ namespace Micon.Windows.Controls
             {
                 this.GradientMode = Portable.Generation.GradientMode.Select;
                 this.endColorPicker.Visibility = Visibility.Visible;
+            }
+        }
+        private static void OnShapeChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            var picker = source as BackgroundPicker;
+            var shape = (Portable.Generation.Shape)e.NewValue;
+
+            switch (shape)
+            {
+                case Portable.Generation.Shape.RoundedRectangle:
+                    picker.shapes.SelectedIndex = 1;
+                    break;
+                case Portable.Generation.Shape.Circle:
+                    picker.shapes.SelectedIndex = 2;
+                    break;
+                default:
+                    picker.shapes.SelectedIndex = 0;
+                    break;
+            }
+        }
+        private static void OnGradientChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            var picker = source as BackgroundPicker;
+            var gradient = (Portable.Generation.GradientMode)e.NewValue;
+
+            switch (gradient)
+            {
+                case Portable.Generation.GradientMode.Auto:
+                    picker.gradients.SelectedIndex = 1;
+                    break;
+                case Portable.Generation.GradientMode.Select:
+                    picker.gradients.SelectedIndex = 2;
+                    break;
+                default:
+                    picker.gradients.SelectedIndex = 0;
+                    break;
             }
         }
     }

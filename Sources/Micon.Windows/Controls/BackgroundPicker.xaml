@@ -51,7 +51,7 @@
             <ListBoxItem>Circle</ListBoxItem>
         </ComboBox>
 
-        <CheckBox Margin="10,0,0,0" VerticalAlignment="Center"  Grid.Row="13" IsChecked="True">
+        <CheckBox Margin="10,0,0,0" VerticalAlignment="Center"  Grid.Row="13" IsChecked="{Binding HasBorder, Mode=TwoWay, ElementName=root}">
             <TextBlock  Margin="2,0,0,0" Foreground="{StaticResource MiconDarkForegroundBrush}" Text="Border" />
         </CheckBox>
 

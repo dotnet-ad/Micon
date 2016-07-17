@@ -18,6 +18,7 @@ namespace Micon.Portable
 		{
             this.LogoScale = 1.0;
             this.BackgroundColor = Color.FromRgb(0x45, 0x99, 0xd9);
+            this.BackgroundHasBorder = true;
 
             //Icons
             var icons = new List<Icon>();
@@ -35,11 +36,12 @@ namespace Micon.Portable
             this.LoadLogoCommand = ReactiveCommand.CreateAsyncTask(ExecuteLoadImageCommand);
 			this.LoadLogoCommand.Subscribe((img) => this.Logo = img);
             this.WhenAnyValue(
-                (x) => x.Logo, 
+                (x) => x.Logo,
                 (x) => x.LogoScale, 
                 (x) => x.BackgroundColor, 
                 (x) => x.BackgroundEndColor, 
-                (x) => x.BackgroundShape, 
+                (x) => x.BackgroundShape,
+                (x) => x.BackgroundHasBorder,
                 (x) => x.GradientMode,
                 this.CreatePreview)
               //.Throttle(TimeSpan.FromMilliseconds(200))
@@ -81,7 +83,10 @@ namespace Micon.Portable
 
         [Reactive]
         public Shape BackgroundShape { get; set; }
-        
+
+        [Reactive]
+        public bool BackgroundHasBorder { get; set; }
+
         [Reactive]
         public PreviewItemViewModel Preview { get; set; }
 
@@ -136,12 +141,13 @@ namespace Micon.Portable
 
         private IBitmap Generate(Icon icon)
         {
-            return this.Generate(icon, this.Logo, this.LogoScale, this.BackgroundColor, this.BackgroundEndColor, this.BackgroundShape, this.GradientMode);
+            return this.Generate(icon, this.Logo, this.LogoScale, this.BackgroundColor, this.BackgroundEndColor, this.BackgroundShape, this.BackgroundHasBorder , this.GradientMode);
         }
 
-        private IBitmap Generate(Icon icon, IBitmap logo, double scale, Color color, Color endColor, Shape shape, GradientMode gradient)
+        private IBitmap Generate(Icon icon, IBitmap logo, double scale, Color color, Color endColor, Shape shape, bool hasBorder, GradientMode gradient)
         {
             var result = icon.Copy();
+            result.HasBorder &= hasBorder;
             result.BackgroundColor = color;
             result.BackgroundEndColor = GetEndColor(color,endColor,gradient);
             result.Scale *= scale;
@@ -155,15 +161,15 @@ namespace Micon.Portable
             return this.generator.GenerateIcon(logo, result);
         }
 
-        private PreviewItemViewModel CreatePreview(IBitmap logo, double scale, Color color, Color endColor, Shape shape, GradientMode gradient)
+        private PreviewItemViewModel CreatePreview(IBitmap logo, double scale, Color color, Color endColor, Shape shape, bool hasBorder, GradientMode gradient)
         {
             return new PreviewItemViewModel()
             {
-                Apple = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "iOS/icon@2x"), logo, scale, color, endColor, shape, gradient),
-                Android = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Android/xhdpi/icon"), logo, scale, color, endColor, shape, gradient),
-                Windows = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Windows/icon"), logo, scale, color, endColor, shape, gradient),
-                WindowsSmall = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Windows/small"), logo, scale, color, endColor, shape, gradient),
-                WindowsWide = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Windows/wide"), logo, scale, color, endColor, shape, gradient),
+                Apple = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "iOS/icon@2x"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                Android = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Android/xhdpi/icon"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                Windows = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Windows/icon"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                WindowsSmall = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Windows/small"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                WindowsWide = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Windows/wide"), logo, scale, color, endColor, shape, hasBorder, gradient),
             };
         }
 
