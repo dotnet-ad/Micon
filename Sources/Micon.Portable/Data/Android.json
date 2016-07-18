@@ -5,43 +5,43 @@
     "Height": 512
   },
   {
-    "Name": "ldpi/ic_launcher",
+    "Name": "drawable-ldpi/ic_launcher",
     "Width": 36,
     "Height": 36,
     "BackgroundShape": "Rectangle"
   },
   {
-    "Name": "mdpi/ic_launcher",
+    "Name": "drawable-mdpi/ic_launcher",
     "Width": 48,
     "Height": 48,
     "BackgroundShape": "Rectangle"
   },
   {
-    "Name": "hdpi/ic_launcher",
+    "Name": "drawable-hdpi/ic_launcher",
     "Width": 72,
     "Height": 72,
     "BackgroundShape": "Rectangle"
   },
   {
-    "Name": "xhdpi/ic_launcher",
+    "Name": "drawable-xhdpi/ic_launcher",
     "Width": 96,
     "Height": 96,
     "BackgroundShape": "Rectangle"
   },
   {
-    "Name": "xxhdpi/ic_launcher",
+    "Name": "drawable-xxhdpi/ic_launcher",
     "Width": 144,
     "Height": 144,
     "BackgroundShape": "Rectangle"
   },
   {
-    "Name": "xxhdpi/ic_launcher",
+    "Name": "drawable-xxhdpi/ic_launcher",
     "Width": 144,
     "Height": 144,
     "BackgroundShape": "Rectangle"
   },
   {
-    "Name": "xxxhdpi/ic_launcher",
+    "Name": "drawable-xxxhdpi/ic_launcher",
     "Width": 192,
     "Height": 192,
     "BackgroundShape": "Rectangle"
