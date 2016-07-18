@@ -1,5 +1,6 @@
 ﻿using Micon.Portable;
 using Micon.Portable.Bitmaps;
+using Micon.Windows.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,13 +24,20 @@ namespace Micon.Windows.Bitmaps
 
         public WindowsBitmap(string path)
         {
-            var bi = new BitmapImage(new Uri(path));
-            this.Image = new RenderTargetBitmap((int)bi.Width, (int)bi.Height, 96d, 96d, PixelFormats.Default);
-           
-            var img = new Image() { Source = bi, Stretch = Stretch.Fill };
-            img.Measure(new System.Windows.Size(bi.Width,bi.Height));
-            img.Arrange(new Rect(0, 0, bi.Width, bi.Height));
-            this.Image.Render(img);    
+            if(!string.IsNullOrEmpty(path))
+            {
+                var bi = new BitmapImage(new Uri(path));
+                this.Image = new RenderTargetBitmap((int)bi.Width, (int)bi.Height, 96d, 96d, PixelFormats.Default);
+
+                var img = new Image() { Source = bi, Stretch = Stretch.Fill };
+                img.Measure(new System.Windows.Size(bi.Width, bi.Height));
+                img.Arrange(new Rect(0, 0, bi.Width, bi.Height));
+                this.Image.Render(img);
+            }  
+            else
+            {
+                this.Image = new RenderTargetBitmap(1, 1, 96d, 96d, PixelFormats.Default);
+            }
         }
 
         public RenderTargetBitmap Image { get; private set; }
@@ -52,21 +60,6 @@ namespace Micon.Windows.Bitmaps
             }
         }
 
-        private static void CreateIfNotExists(string path)
-        {
-            var dir = System.IO.Directory.GetParent(path);
-            if (!dir.Exists)
-            {
-                dir.Create();
-            }
-
-            var file = new System.IO.FileInfo(path);
-            if (!file.Exists)
-            {
-                file.Create().Dispose();
-            }
-        }
-
         public void Draw(IBitmap other, Rectangle area)
         {
             var otherNsImage = ((WindowsBitmap)other).Image;
@@ -81,7 +74,7 @@ namespace Micon.Windows.Bitmaps
         {
             var png = new PngBitmapEncoder();
             png.Frames.Add(BitmapFrame.Create(this.Image));
-            CreateIfNotExists(path);
+            FileHelpers.CreateFileIfNotExists(path);
             using (var stream = File.Create(path))
             {
                 png.Save(stream);

@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace Micon.Windows.Controls
+﻿namespace Micon.Windows.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    
     /// <summary>
     /// Interaction logic for BackgroundPicker.xaml
     /// </summary>
@@ -33,7 +22,7 @@ namespace Micon.Windows.Controls
             set { SetValue(TitleProperty, value); }
         }
 
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BackgroundPicker), new PropertyMetadata(null));
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(BackgroundPicker), new PropertyMetadata(null));
 
         public string Description
         {
@@ -41,7 +30,7 @@ namespace Micon.Windows.Controls
             set { SetValue(DescriptionProperty, value); }
         }
 
-        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(BackgroundPicker), new PropertyMetadata(null));
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(nameof(Description), typeof(string), typeof(BackgroundPicker), new PropertyMetadata(null));
         
         public string AndroidDescription
         {
@@ -49,7 +38,7 @@ namespace Micon.Windows.Controls
             set { SetValue(AndroidDescriptionProperty, value); }
         }
 
-        public static readonly DependencyProperty AndroidDescriptionProperty = DependencyProperty.Register("AndroidDescription", typeof(string), typeof(BackgroundPicker), new PropertyMetadata(null));
+        public static readonly DependencyProperty AndroidDescriptionProperty = DependencyProperty.Register(nameof(AndroidDescription), typeof(string), typeof(BackgroundPicker), new PropertyMetadata(null));
 
         public string Path
         {
@@ -57,7 +46,7 @@ namespace Micon.Windows.Controls
             set { SetValue(PathProperty, value); }
         }
 
-        public static readonly DependencyProperty PathProperty = DependencyProperty.Register("Path", typeof(string), typeof(BackgroundPicker), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty PathProperty = DependencyProperty.Register(nameof(Path), typeof(string), typeof(BackgroundPicker), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public Color Color
         {
@@ -65,7 +54,7 @@ namespace Micon.Windows.Controls
             set { SetValue(ColorProperty, value); }
         }
 
-        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register("Color", typeof(Color), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Color.FromArgb(0,0,0,0), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(nameof(Color), typeof(Color), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Color.FromArgb(0,0,0,0), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnBackgroundColorChanged));
 
         public Color EndColor
         {
@@ -73,7 +62,7 @@ namespace Micon.Windows.Controls
             set { SetValue(EndColorProperty, value); }
         }
 
-        public static readonly DependencyProperty EndColorProperty = DependencyProperty.Register("EndColor", typeof(Color), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Color.FromArgb(0, 0, 0, 0), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty EndColorProperty = DependencyProperty.Register(nameof(EndColor), typeof(Color), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Color.FromArgb(0, 0, 0, 0), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnBackgroundEndColorChanged));
 
         public Portable.Generation.Shape Shape
         {
@@ -81,7 +70,7 @@ namespace Micon.Windows.Controls
             set { SetValue(ShapeProperty, value); }
         }
 
-        public static readonly DependencyProperty ShapeProperty = DependencyProperty.Register("Shape", typeof(Portable.Generation.Shape), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Generation.Shape.Rectangle, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnShapeChanged));
+        public static readonly DependencyProperty ShapeProperty = DependencyProperty.Register(nameof(Shape), typeof(Portable.Generation.Shape), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Generation.Shape.Rectangle, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnShapeChanged));
 
         public Portable.Generation.GradientMode GradientMode
         {
@@ -89,7 +78,7 @@ namespace Micon.Windows.Controls
             set { SetValue(GradientModeProperty, value); }
         }
 
-        public static readonly DependencyProperty GradientModeProperty = DependencyProperty.Register("GradientMode", typeof(Portable.Generation.GradientMode), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Generation.GradientMode.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnGradientChanged));
+        public static readonly DependencyProperty GradientModeProperty = DependencyProperty.Register(nameof(GradientMode), typeof(Portable.Generation.GradientMode), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Generation.GradientMode.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnGradientChanged));
 
         public bool HasBorder
         {
@@ -110,9 +99,7 @@ namespace Micon.Windows.Controls
             if (e.NewValue != null)
                 this.EndColor = e.NewValue.Value;
         }
-
-
-
+        
         private void shapes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (this.shapes.SelectedIndex == 0)
@@ -147,6 +134,21 @@ namespace Micon.Windows.Controls
                 this.endColorPicker.Visibility = Visibility.Visible;
             }
         }
+
+        private static void OnBackgroundColorChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            var picker = source as BackgroundPicker;
+            var color = (Color)e.NewValue;
+            picker.colorPicker.SelectedColor = color;
+        }
+
+        private static void OnBackgroundEndColorChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            var picker = source as BackgroundPicker;
+            var color = (Color)e.NewValue;
+            picker.endColorPicker.SelectedColor = color;
+        }
+
         private static void OnShapeChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             var picker = source as BackgroundPicker;

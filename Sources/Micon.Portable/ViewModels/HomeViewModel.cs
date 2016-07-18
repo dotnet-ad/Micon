@@ -9,17 +9,15 @@ using ReactiveUI.Fody.Helpers;
 using System.Linq;
 using Micon.Portable.Data;
 using System.IO;
+using Micon.Portable.Platform;
+using Micon.Portable.Files;
 
 namespace Micon.Portable
 {
 	public class HomeViewModel: ReactiveObject
 	{
-		public HomeViewModel(IBitmapLoader loader, IconGenerator generator)
+		public HomeViewModel(IBitmapLoader loader, IStorage storage, ILauncher launcher, IInfo info, IconGenerator generator)
 		{
-            this.LogoScale = 1.0;
-            this.BackgroundColor = Color.FromRgb(0x45, 0x99, 0xd9);
-            this.BackgroundHasBorder = true;
-
             //Icons
             var icons = new List<Icon>();
             icons.AddRange(Icons.Load(Icons.iOS));
@@ -28,13 +26,24 @@ namespace Micon.Portable
             this.icons = icons;
 
             //Depdencies
+            this.info = info;
             this.loader = loader;
             this.generator = generator;
+            this.storage = storage;
+            this.launcher = launcher;
 
             // Reactive
             this.ExportCommand = ReactiveCommand.CreateAsyncTask(ExecuteExportCommand);
             this.LoadLogoCommand = ReactiveCommand.CreateAsyncTask(ExecuteLoadImageCommand);
-			this.LoadLogoCommand.Subscribe((img) => this.Logo = img);
+            this.NewCommand = ReactiveCommand.Create();
+            this.NewCommand.Subscribe(this.ExecuteNewCommand);
+            this.AboutCommand = ReactiveCommand.Create();
+            this.AboutCommand.Subscribe(this.ExecuteAboutCommand);
+            this.QuitCommand = ReactiveCommand.Create();
+            this.QuitCommand.Subscribe(this.ExecuteQuitCommand);
+            this.OpenCommand = ReactiveCommand.CreateAsyncTask(ExecuteLoadCommand);
+            this.SaveCommand = ReactiveCommand.CreateAsyncTask(ExecuteSaveCommand);
+            this.LoadLogoCommand.Subscribe((img) => this.Logo = img);
             this.WhenAnyValue(
                 (x) => x.Logo,
                 (x) => x.LogoScale, 
@@ -47,9 +56,45 @@ namespace Micon.Portable
               //.Throttle(TimeSpan.FromMilliseconds(200))
               .Subscribe((o) => this.Preview = o);// .ToProperty(this,(x) => x.Preview);
             this.WhenAnyValue((x) => x.Logo).Subscribe((i) => this.RaisePropertyChanged(nameof(LogoPath)));
+            
+            this.WhenAnyValue(
+                (x) => x.LogoPath,
+                (x) => x.GradientMode,
+                (x) => x.BackgroundColor,
+                (x) => x.BackgroundEndColor,
+                (x) => x.BackgroundShape,
+                (x) => x.BackgroundHasBorder,
+                (x) => x.GradientMode,
+                (a, b, c, d, e, f, g) => a
+                ).Subscribe((a) => this.saved = false);
+
+            this.NewCommand.Subscribe((x) =>  this.saved = true);
+            this.OpenCommand.Subscribe((x) => this.saved = true);
+            this.SaveCommand.Subscribe((x) => this.saved = true);
+
+            // Init
+            this.ExecuteNewCommand(null);
         }
 
+        #region Constants
+        
+        const string IconPreviewApple = "AppIcon.appiconset/Icon-76x76@2x";
+
+        const string IconPreviewAndroid = "xhdpi/ic_launcher";
+
+        const string IconPreviewWindows = "Square150x150Logo";
+
+        const string IconPreviewWindowsSmall = "Square71x71Logo";
+
+        const string IconPreviewWindowsWide = "Wide310x150Logo";
+
+        #endregion
+
         #region Fields
+
+        private bool saved;
+
+        private readonly IStorage storage;
 
         private string path;
 
@@ -58,16 +103,20 @@ namespace Micon.Portable
 		readonly IconGenerator generator;
 
         private IEnumerable<Icon> icons;
+        private readonly ILauncher launcher;
+        private readonly IInfo info;
 
         #endregion
 
         #region Bound properties
-        
+
         public string LogoPath
         {
             get { return this.path; }
             set { this.LoadLogoCommand.Execute(value); }
         }
+
+        public string Version { get { return this.info.GetApplicationVersion(); } }
 
         [Reactive]
         public IBitmap Logo { get; set; }
@@ -88,10 +137,10 @@ namespace Micon.Portable
         public bool BackgroundHasBorder { get; set; }
 
         [Reactive]
-        public PreviewItemViewModel Preview { get; set; }
+        public GradientMode GradientMode { get; set; }
 
         [Reactive]
-        public GradientMode GradientMode { get; set; }
+        public PreviewItemViewModel Preview { get; set; }
 
         [Reactive]
         public ScreenBackground ScreenBackground { get; set; }
@@ -104,21 +153,94 @@ namespace Micon.Portable
 
 		public ReactiveCommand<PreviewItemViewModel> PreviewCommand { get; private set; }
 
-		public ReactiveCommand<IEnumerable<IBitmap>> ExportCommand { get; private set; }
+		public ReactiveCommand<string> ExportCommand { get; private set; }
 
-		#endregion
+        public ReactiveCommand<MiconFile> OpenCommand { get; private set; }
 
-		#region Command execution
+        public ReactiveCommand<MiconFile> SaveCommand { get; private set; }
 
-		private async Task<IBitmap> ExecuteLoadImageCommand(object parameter)
-		{
-			var path = parameter as string;
-			var r = await this.loader.LoadAsync(path);
-            this.path = path;
-            return r;
+        public ReactiveCommand<object> NewCommand { get; private set; }
+
+        public ReactiveCommand<object> AboutCommand { get; private set; }
+
+        public ReactiveCommand<object> QuitCommand { get; private set; }
+
+        #endregion
+
+        #region Command execution
+
+        private async Task<MiconFile> ExecuteLoadCommand(object parameter)
+        {
+            var path = parameter as string;
+            var f = await this.storage.Load<MiconFile>(path);
+
+            this.LogoPath = f.LogoPath;
+            this.BackgroundColor = f.BackgroundColor;
+            this.BackgroundEndColor = f.BackgroundEndColor;
+            this.BackgroundHasBorder = f.BackgroundHasBorder;
+            this.BackgroundShape = f.BackgroundShape;
+            this.LogoScale = f.Scale;
+            this.GradientMode = f.GradientMode;
+            
+            return f;
         }
 
-        private async Task<IEnumerable<IBitmap>> ExecuteExportCommand(object parameter)
+        private async Task<MiconFile> ExecuteSaveCommand(object parameter)
+        {
+            var path = parameter as string;
+
+            var f = new MiconFile()
+            {
+                LogoPath = this.LogoPath,
+                GradientMode = this.GradientMode,
+                BackgroundHasBorder = this.BackgroundHasBorder,
+                BackgroundColor = this.BackgroundColor,
+                BackgroundEndColor = this.BackgroundEndColor,
+                BackgroundShape = this.BackgroundShape,
+                Scale = this.LogoScale,
+            };
+
+            await this.storage.Save(path, f);
+            
+            return f;
+        }
+
+        private async Task<IBitmap> ExecuteLoadImageCommand(object parameter)
+		{
+			var path = parameter as string;
+
+            if(!string.IsNullOrEmpty(path))
+            {
+                var r = await this.loader.LoadAsync(path);
+                this.path = path;
+                return r;
+            }
+
+            return null;
+        }
+
+        private void ExecuteNewCommand(object parameter)
+        {
+            this.LogoPath = null;
+            this.LogoScale = 1.0;
+            this.BackgroundColor = Color.FromRgb(0x45, 0x99, 0xd9);
+            this.BackgroundEndColor = Color.FromRgb(0x45, 0x99, 0xd9);
+            this.BackgroundHasBorder = true;
+            this.BackgroundShape = Shape.Rectangle;
+            this.GradientMode = GradientMode.None;
+        }
+
+        private void ExecuteAboutCommand(object parameter)
+        {
+            this.launcher.Open("https://github.com/aloisdeniel/Micon/");
+        }
+
+        private void ExecuteQuitCommand(object parameter)
+        {
+            this.launcher.Quit();
+        }
+
+        private async Task<string> ExecuteExportCommand(object parameter)
         {
             var output = parameter as string;
 
@@ -128,7 +250,7 @@ namespace Micon.Portable
 
             await Task.WhenAll(saves);
 
-            return bitmaps.Select((x) => x.Bitmap);
+            return output;
         }
 
         #endregion
@@ -161,11 +283,6 @@ namespace Micon.Portable
             return this.generator.GenerateIcon(logo, result);
         }
 
-        const string IconPreviewApple = "AppIcon.appiconset/Icon-76x76@2x";
-        const string IconPreviewAndroid = "xhdpi/ic_launcher";
-        const string IconPreviewWindows = "Square150x150Logo";
-        const string IconPreviewWindowsSmall = "Square71x71Logo";
-        const string IconPreviewWindowsWide = "Wide310x150Logo";
 
         private PreviewItemViewModel CreatePreview(IBitmap logo, double scale, Color color, Color endColor, Shape shape, bool hasBorder, GradientMode gradient)
         {

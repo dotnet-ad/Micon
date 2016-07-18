@@ -3,6 +3,7 @@ using Micon.Portable.Generation;
 using Micon.Windows.Bitmaps;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,13 +28,22 @@ namespace Micon.Windows
         {
             InitializeComponent();
 
-            this.DataContext = App.Container.Resolve<Portable.HomeViewModel>();
-     
+            var vm = App.Container.Resolve<Portable.HomeViewModel>();
+
+            vm.ExportCommand.Subscribe((folder) =>
+            {
+                Process.Start(folder);
+            });
+
+            this.DataContext = vm;
+            
             this.SizeChanged += MainWindow_SizeChanged;
-            // Do any additional setup after loading the view.
+            
             this.UpdatePanel(this.RenderSize);
         }
         const int min = 1375;
+
+        private Portable.HomeViewModel ViewModel { get { return this.DataContext as Portable.HomeViewModel; } }
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -71,5 +81,41 @@ namespace Micon.Windows
                 }
             }
         }
+
+        private void menuOpen_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".micon";
+            dlg.Filter = "Micon|*.micon";
+
+            var result = dlg.ShowDialog();
+
+            var cmd = this.ViewModel.OpenCommand;
+            if (result == true && cmd.CanExecute(dlg.FileName))
+            {
+                cmd.Execute(dlg.FileName);
+            }
+        }
+
+        private void menuSave_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.DefaultExt = ".micon";
+            dlg.Filter = "Micon|*.micon";
+
+            var result = dlg.ShowDialog();
+
+            var cmd = this.ViewModel.SaveCommand;
+            if (result == true && cmd.CanExecute(dlg.FileName))
+            {
+                cmd.Execute(dlg.FileName);
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        
     }
 }

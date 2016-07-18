@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,7 +53,7 @@ namespace Micon.Portable.Generation
         #endregion
 
         #region HSL
-
+        
         public double Hue
         {
             get
@@ -81,7 +82,7 @@ namespace Micon.Portable.Generation
             }
 
         }
-
+        
         public double Saturation
         {
             get

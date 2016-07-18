@@ -31,7 +31,7 @@ namespace Micon.Windows.Controls
             set { SetValue(TitleProperty, value); }
         }
         
-        public static readonly DependencyProperty TitleProperty =  DependencyProperty.Register("Title", typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
+        public static readonly DependencyProperty TitleProperty =  DependencyProperty.Register(nameof(Title), typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
 
         public string Description
         {
@@ -39,7 +39,7 @@ namespace Micon.Windows.Controls
             set { SetValue(DescriptionProperty, value); }
         }
         
-        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(nameof(Description), typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
 
         public string SizeDescription
         {
@@ -47,7 +47,7 @@ namespace Micon.Windows.Controls
             set { SetValue(SizeDescriptionProperty, value); }
         }
 
-        public static readonly DependencyProperty SizeDescriptionProperty = DependencyProperty.Register("SizeDescription", typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
+        public static readonly DependencyProperty SizeDescriptionProperty = DependencyProperty.Register(nameof(SizeDescription), typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
 
         public string Path
         {
@@ -55,7 +55,7 @@ namespace Micon.Windows.Controls
             set { SetValue(PathProperty, value); }
         }
         
-        public static readonly DependencyProperty PathProperty =  DependencyProperty.Register("Path", typeof(string), typeof(ImagePicker), new FrameworkPropertyMetadata(null,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnPathChanged));
+        public static readonly DependencyProperty PathProperty =  DependencyProperty.Register(nameof(Path), typeof(string), typeof(ImagePicker), new FrameworkPropertyMetadata(null,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnPathChanged));
 
         public double Scale
         {
@@ -63,13 +63,13 @@ namespace Micon.Windows.Controls
             set { SetValue(ScaleProperty, value); }
         }
 
-        public static readonly DependencyProperty ScaleProperty = DependencyProperty.Register("Scale", typeof(double), typeof(ImagePicker), new FrameworkPropertyMetadata(1.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty ScaleProperty = DependencyProperty.Register(nameof(Scale), typeof(double), typeof(ImagePicker), new FrameworkPropertyMetadata(1.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnScaleChanged));
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".png";
-            dlg.Filter = "PNG Files (*.png)|JPEG Files (*.jpeg)|*.jpeg|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+            dlg.Filter = "PNG|*.png|jpg|*.jpg|jpeg|*.jpeg|gif|*.gif";
             
             var result = dlg.ShowDialog();
             
@@ -87,8 +87,14 @@ namespace Micon.Windows.Controls
         private static void OnPathChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             var picker = source as ImagePicker;
-            picker.preview.Source = new BitmapImage(new Uri(e.NewValue as string));
+            var path = e.NewValue as string;
+            picker.preview.Source = (path != null) ? new BitmapImage(new Uri(path)) : null;
+        }
 
+        private static void OnScaleChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            var picker = source as ImagePicker;
+            picker.scaleSlider.Value = (double)e.NewValue;
         }
     }
 }

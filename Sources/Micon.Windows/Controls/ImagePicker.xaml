@@ -41,7 +41,7 @@
         </Border>
         
         <TextBlock Grid.Row="7" Grid.ColumnSpan="2" Foreground="{StaticResource MiconDarkForegroundBrush}" Margin="10,0,0,0" Text="{Binding SizeDescription, ElementName=root}" Opacity="0.5" FontSize="10" />
-        <Slider Grid.Row="9" Margin="10,0,0,0" IsSelectionRangeEnabled="True" ValueChanged="Slider_ValueChanged" Minimum="0.2"  Maximum="1.0" Value="1.0" Grid.ColumnSpan="2" SelectionEnd="{Binding Value, RelativeSource={RelativeSource Self}}">
+        <Slider Grid.Row="9" x:Name="scaleSlider" Margin="10,0,0,0" IsSelectionRangeEnabled="True" ValueChanged="Slider_ValueChanged" Minimum="0.2"  Maximum="1.0" Value="1.0" Grid.ColumnSpan="2" SelectionEnd="{Binding Value, RelativeSource={RelativeSource Self}}">
             <Slider.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{StaticResource MiconAccentColor}" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlDarkDarkBrushKey}" Color="#cccccc" />

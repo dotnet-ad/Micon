@@ -35,11 +35,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Data\Icons.cs" />
+    <Compile Include="Files\ColorConverter.cs" />
+    <Compile Include="Files\MiconFile.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
+    <Compile Include="Extensions\StorageExtensions.cs" />
     <Compile Include="Generation\Color.cs" />
     <Compile Include="Generation\GradientMode.cs" />
     <Compile Include="Generation\ScreenBackground.cs" />
     <Compile Include="Generation\Shape.cs" />
+    <Compile Include="Platform\IInfo.cs" />
+    <Compile Include="Platform\ILauncher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bitmaps\IBitmap.cs" />
     <Compile Include="Bitmaps\IBitmapLoader.cs" />
@@ -48,6 +53,7 @@
     <Compile Include="Generation\IconGenerator.cs" />
     <Compile Include="Generation\Size.cs" />
     <Compile Include="Generation\Rectangle.cs" />
+    <Compile Include="Platform\IStorage.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\Items\PreviewItemViewModel.cs" />
     <Compile Include="Dependencies.cs" />

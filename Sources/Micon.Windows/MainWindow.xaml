@@ -17,16 +17,18 @@
 
         <Menu>
             <MenuItem Header="File">
-                <MenuItem Header="New" HorizontalAlignment="Left" Width="140" />
-                <MenuItem Header="Open" HorizontalAlignment="Left" Width="140" />
+                <MenuItem Header="New" Command="{Binding NewCommand}" HorizontalAlignment="Left" Width="140" />
+                <MenuItem Header="Open" x:Name="menuOpen" Click="menuOpen_Click" HorizontalAlignment="Left" Width="140" />
                 <Separator HorizontalAlignment="Left" Width="140"/>
-                <MenuItem Header="Save" HorizontalAlignment="Left" Width="140" />
+                <MenuItem Header="Save" x:Name="menuSave" Click="menuSave_Click" HorizontalAlignment="Left" Width="140" />
                 <Separator HorizontalAlignment="Left" Width="140"/>
-                <MenuItem Header="Quit" HorizontalAlignment="Left" Width="140" />
+                <MenuItem Header="Quit" Click="MenuItem_Click" HorizontalAlignment="Left" Width="140" />
             </MenuItem>
 
             <MenuItem Header="Help">
-                <MenuItem Header="About" HorizontalAlignment="Left" Width="140" />
+                <MenuItem Header="About" HorizontalAlignment="Left" Command="{Binding AboutCommand}" Width="140" />
+                <Separator HorizontalAlignment="Left" Width="140"/>
+                <MenuItem Header="{Binding Version}" />
             </MenuItem>
         </Menu>
 
