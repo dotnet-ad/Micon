@@ -155,7 +155,7 @@ namespace Micon.Portable
             if (icon.BackgroundShape != Shape.Unavailable)
             {
                 result.BackgroundShape = shape;
-                result.HasBorder = true;
+                result.HasBorder = hasBorder;
             }
 
             return this.generator.GenerateIcon(logo, result);
