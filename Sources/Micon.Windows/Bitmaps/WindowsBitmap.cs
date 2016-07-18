@@ -30,6 +30,8 @@ namespace Micon.Windows.Bitmaps
                 this.Image = new RenderTargetBitmap((int)bi.Width, (int)bi.Height, 96d, 96d, PixelFormats.Default);
 
                 var img = new Image() { Source = bi, Stretch = Stretch.Fill };
+                RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.HighQuality);
+                RenderOptions.SetEdgeMode(img, EdgeMode.Aliased);
                 img.Measure(new System.Windows.Size(bi.Width, bi.Height));
                 img.Arrange(new Rect(0, 0, bi.Width, bi.Height));
                 this.Image.Render(img);
@@ -64,7 +66,9 @@ namespace Micon.Windows.Bitmaps
         {
             var otherNsImage = ((WindowsBitmap)other).Image;
             
-            var img = new Image() { Source = otherNsImage, Stretch = Stretch.Uniform };
+            var img = new Image() { Source = otherNsImage, Stretch = Stretch.Uniform, };
+            RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.HighQuality);
+            RenderOptions.SetEdgeMode(img, EdgeMode.Aliased);
             img.Measure(new System.Windows.Size(area.Width,area.Height));
             img.Arrange(new Rect(area.X, area.Y, area.Width, area.Height));
             this.Image.Render(img);

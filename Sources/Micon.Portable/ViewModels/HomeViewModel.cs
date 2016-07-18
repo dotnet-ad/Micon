@@ -80,7 +80,7 @@ namespace Micon.Portable
         
         const string IconPreviewApple = "AppIcon.appiconset/Icon-76x76@2x";
 
-        const string IconPreviewAndroid = "xhdpi/ic_launcher";
+        const string IconPreviewAndroid = "drawable-xhdpi/ic_launcher";
 
         const string IconPreviewWindows = "Square150x150Logo";
 
