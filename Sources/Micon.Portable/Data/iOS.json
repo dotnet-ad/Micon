@@ -1,4 +1,82 @@
 ﻿[
-  { "Name": "icon@2x", "Width" : 120, "Height" :  120 },
-  { "Name": "icon@3x", "Width" : 180, "Height" :  180 }
+  {
+    "Name": "iTunesArtwork@1x",
+    "Width": 512,
+    "Height": 512
+  },
+  {
+    "Name": "iTunesArtwork@2x",
+    "Width": 1024,
+    "Height": 1024
+  },
+  {
+    "Name": "iTunesArtwork@3x",
+    "Width": 1536,
+    "Height": 1536
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-29x29@1x",
+    "Width": 29,
+    "Height": 29
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-29x29@2x",
+    "Width": 58,
+    "Height": 58
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-29x29@3x",
+    "Width": 87,
+    "Height": 87
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-40x40@1x",
+    "Width": 40,
+    "Height": 40
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-40x40@2x",
+    "Width": 80,
+    "Height": 80
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-40x40@3x",
+    "Width": 120,
+    "Height": 120
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-60x60@1x",
+    "Width": 60,
+    "Height": 60
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-60x60@2x",
+    "Width": 120,
+    "Height": 120
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-60x60@3x",
+    "Width": 180,
+    "Height": 180
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-76x76@1x",
+    "Width": 76,
+    "Height": 76
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-76x76@2x",
+    "Width": 152,
+    "Height": 152
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-76x76@3x",
+    "Width": 228,
+    "Height": 228
+  },
+  {
+    "Name": "AppIcon.appiconset/Icon-83x83@2x",
+    "Width": 167,
+    "Height": 167
+  }
 ]

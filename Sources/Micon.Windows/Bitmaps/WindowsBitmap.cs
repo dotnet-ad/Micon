@@ -25,6 +25,7 @@ namespace Micon.Windows.Bitmaps
         {
             var bi = new BitmapImage(new Uri(path));
             this.Image = new RenderTargetBitmap((int)bi.Width, (int)bi.Height, 96d, 96d, PixelFormats.Default);
+           
             var img = new Image() { Source = bi, Stretch = Stretch.Fill };
             img.Measure(new System.Windows.Size(bi.Width,bi.Height));
             img.Arrange(new Rect(0, 0, bi.Width, bi.Height));

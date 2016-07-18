@@ -4,7 +4,7 @@ Micon is a small tool for generating quickly your mobile app icons.
 
 ## Downloads
 
-[Windows](https://github.com/aloisdeniel/Micon/releases)
+[Windows](https://github.com/aloisdeniel/Micon/releases) *(.NET 4.5)*
 
 ## Features
 
@@ -13,17 +13,18 @@ Micon is a small tool for generating quickly your mobile app icons.
 * Save and load your icon generation configuration
 * Create icon from a transparent logo and background color
 * Preview the result on light or dark background
-* Export icons to all required sizes (Android,iOS)
-* Different Android icon shapes
-* Quick gradient suggestion or custom one, and border
+* Export icons to all required sizes (Android,iOS,UWP)
+* Different Android icon shapes and border
+* Quick gradient suggestion or custom one
 
 ## Roadmap
 
+* Add transparency level for Android/UWP.
 * Add Shortcuts
-* Mac version 
-* Separate settings for each target
-* Generation from command line
-* SVG support
+* Add Mac version 
+* Add separated settings for each target
+* Add generation from command line
+* Add SVG support
 * Improve image quality
 * Improve auto gradient colors
 

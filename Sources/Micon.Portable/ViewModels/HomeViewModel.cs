@@ -161,15 +161,21 @@ namespace Micon.Portable
             return this.generator.GenerateIcon(logo, result);
         }
 
+        const string IconPreviewApple = "AppIcon.appiconset/Icon-76x76@2x";
+        const string IconPreviewAndroid = "xhdpi/ic_launcher";
+        const string IconPreviewWindows = "Square150x150Logo";
+        const string IconPreviewWindowsSmall = "Square71x71Logo";
+        const string IconPreviewWindowsWide = "Wide310x150Logo";
+
         private PreviewItemViewModel CreatePreview(IBitmap logo, double scale, Color color, Color endColor, Shape shape, bool hasBorder, GradientMode gradient)
         {
             return new PreviewItemViewModel()
             {
-                Apple = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "iOS/icon@2x"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                Android = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Android/xhdpi/icon"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                Windows = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Windows/icon"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                WindowsSmall = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Windows/small"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                WindowsWide = this.Generate(this.icons.FirstOrDefault((i) => i.Name == "Windows/wide"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                Apple = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"iOS/{IconPreviewApple}"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                Android = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Android/{IconPreviewAndroid}"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                Windows = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{IconPreviewWindows}"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                WindowsSmall = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{IconPreviewWindowsSmall}"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                WindowsWide = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{IconPreviewWindowsWide}"), logo, scale, color, endColor, shape, hasBorder, gradient),
             };
         }
 
