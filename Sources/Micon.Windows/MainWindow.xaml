@@ -15,7 +15,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Menu>
+        <Menu Background="White" FontSize="11" Foreground="{StaticResource MiconDarkForegroundBrush}" Padding="5">
             <MenuItem Header="File">
                 <MenuItem Header="New" Command="{Binding NewCommand}" HorizontalAlignment="Left" Width="140" />
                 <MenuItem Header="Open" x:Name="menuOpen" Click="menuOpen_Click" HorizontalAlignment="Left" Width="140" />

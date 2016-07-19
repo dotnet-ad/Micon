@@ -17,14 +17,16 @@ namespace Micon.Portable
 	public class HomeViewModel: ReactiveObject
 	{
 		public HomeViewModel(IBitmapLoader loader, IStorage storage, ILauncher launcher, IInfo info, IconGenerator generator)
-		{
+        {
             //Icons
             var icons = new List<Icon>();
             icons.AddRange(Icons.Load(Icons.iOS));
             icons.AddRange(Icons.Load(Icons.Android));
             icons.AddRange(Icons.Load(Icons.Windows));
+            this.defaultIcons = icons;
             this.icons = icons;
-
+            this.iconsPreview = defaultIconPreview;
+            
             //Depdencies
             this.info = info;
             this.loader = loader;
@@ -103,8 +105,23 @@ namespace Micon.Portable
 		readonly IconGenerator generator;
 
         private IEnumerable<Icon> icons;
+
+        private MiconPreview iconsPreview;
+
+        private readonly static MiconPreview defaultIconPreview = new MiconPreview()
+        {
+            Android = IconPreviewAndroid,
+            Apple = IconPreviewApple,
+            Windows = IconPreviewWindows,
+            WindowsSmall = IconPreviewWindowsSmall,
+            WindowsWide = IconPreviewWindowsWide,
+        };
+
         private readonly ILauncher launcher;
+
         private readonly IInfo info;
+
+        private readonly List<Icon> defaultIcons;
 
         #endregion
 
@@ -174,6 +191,7 @@ namespace Micon.Portable
             var path = parameter as string;
             var f = await this.storage.Load<MiconFile>(path);
 
+            this.icons = f.Icons;
             this.LogoPath = f.LogoPath;
             this.BackgroundColor = f.BackgroundColor;
             this.BackgroundEndColor = f.BackgroundEndColor;
@@ -191,6 +209,8 @@ namespace Micon.Portable
 
             var f = new MiconFile()
             {
+                Icons = icons,
+                Preview = iconsPreview,
                 LogoPath = this.LogoPath,
                 GradientMode = this.GradientMode,
                 BackgroundHasBorder = this.BackgroundHasBorder,
@@ -221,6 +241,8 @@ namespace Micon.Portable
 
         private void ExecuteNewCommand(object parameter)
         {
+            this.icons = this.defaultIcons;
+            this.iconsPreview = defaultIconPreview;
             this.LogoPath = null;
             this.LogoScale = 1.0;
             this.BackgroundColor = Color.FromRgb(0x45, 0x99, 0xd9);
@@ -288,11 +310,11 @@ namespace Micon.Portable
         {
             return new PreviewItemViewModel()
             {
-                Apple = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"iOS/{IconPreviewApple}"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                Android = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Android/{IconPreviewAndroid}"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                Windows = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{IconPreviewWindows}"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                WindowsSmall = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{IconPreviewWindowsSmall}"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                WindowsWide = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{IconPreviewWindowsWide}"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                Apple = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"iOS/{this.iconsPreview.Apple}"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                Android = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Android/{this.iconsPreview.Android}"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                Windows = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{this.iconsPreview.Windows}"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                WindowsSmall = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{this.iconsPreview.WindowsSmall}"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                WindowsWide = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{this.iconsPreview.WindowsWide}"), logo, scale, color, endColor, shape, hasBorder, gradient),
             };
         }
 
