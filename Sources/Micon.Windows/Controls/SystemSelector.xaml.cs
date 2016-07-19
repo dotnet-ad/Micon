@@ -109,7 +109,7 @@ namespace Micon.Windows.Controls
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var selected = sender as Path;
+            var selected = (sender as Border).Child as Path;
             this.SelectedIndex = (this.ios == selected) ? 0 : ((this.android == selected) ? 1 : 2);
         }
     }

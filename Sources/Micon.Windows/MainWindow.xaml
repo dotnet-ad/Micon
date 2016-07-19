@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:Micon.Windows.Controls"
         Icon="/Assets/icon_64.png"
         mc:Ignorable="d"
-        Title="Micon" Height="580" Width="800" MinHeight="580" MinWidth="800">
+        Title="Micon" Height="600" Width="800" MinHeight="600" MinWidth="800">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -17,16 +17,41 @@
 
         <Menu Background="White" FontSize="11" Foreground="{StaticResource MiconDarkForegroundBrush}" Padding="5">
             <MenuItem Header="File">
-                <MenuItem Header="New" Command="{Binding NewCommand}" HorizontalAlignment="Left" Width="140" />
-                <MenuItem Header="Open" x:Name="menuOpen" Click="menuOpen_Click" HorizontalAlignment="Left" Width="140" />
+                <MenuItem Header="New" Command="{Binding NewCommand}" HorizontalAlignment="Left" Width="140">
+                    <MenuItem.Icon>
+                        <Image Source="/Assets/icon_menu_new.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Open" x:Name="menuOpen" Click="menuOpen_Click" HorizontalAlignment="Left" Width="140">
+                    <MenuItem.Icon>
+                        <Image Source="/Assets/icon_menu_open.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator HorizontalAlignment="Left" Width="140"/>
-                <MenuItem Header="Save" x:Name="menuSave" Click="menuSave_Click" HorizontalAlignment="Left" Width="140" />
+                <MenuItem Header="Save" x:Name="menuSave" Click="menuSave_Click" HorizontalAlignment="Left" Width="140">
+                    <MenuItem.Icon>
+                        <Image Source="/Assets/icon_menu_save.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Export" x:Name="menuExport" Click="OnExportClick" HorizontalAlignment="Left" Width="140">
+                    <MenuItem.Icon>
+                        <Image Source="/Assets/icon_menu_export.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator HorizontalAlignment="Left" Width="140"/>
-                <MenuItem Header="Quit" Click="MenuItem_Click" HorizontalAlignment="Left" Width="140" />
+                <MenuItem Header="Quit" Click="MenuItem_Click" HorizontalAlignment="Left" Width="140">
+                    <MenuItem.Icon>
+                        <Image Source="/Assets/icon_menu_quit.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
 
             <MenuItem Header="Help">
-                <MenuItem Header="About" HorizontalAlignment="Left" Command="{Binding AboutCommand}" Width="140" />
+                <MenuItem Header="About" HorizontalAlignment="Left" Command="{Binding AboutCommand}" Width="140">
+                    <MenuItem.Icon>
+                        <Image Source="/Assets/icon_menu_about.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator HorizontalAlignment="Left" Width="140"/>
                 <MenuItem Header="{Binding Version}" />
             </MenuItem>
@@ -41,9 +66,14 @@
 
             <ScrollViewer>
                 <StackPanel Margin="20">
-                    <controls:ImagePicker Title="Logo" Description="The main logo of your icon" SizeDescription="Select the size of the logo" Path="{Binding LogoPath, Mode=TwoWay}" Scale="{Binding LogoScale, Mode=TwoWay}" />
-                    <controls:BackgroundPicker Title="Background" Description="The background image of your icon. It will be stretched for all tiles." AndroidDescription="Select the Android icon shape" Shape="{Binding BackgroundShape, Mode=TwoWay}" EndColor="{Binding BackgroundEndColor, Mode=TwoWay, Converter={StaticResource NativeColorConverter}}" Color="{Binding BackgroundColor, Mode=TwoWay, Converter={StaticResource NativeColorConverter}}" GradientMode="{Binding GradientMode, Mode=TwoWay}" HasBorder="{Binding BackgroundHasBorder,Mode=TwoWay}" Margin="0,20,0,0" />
-                    <Button Content="EXPORT" Margin="10,20,0,0" Padding="5" Click="Button_Click" />
+                    <controls:ImagePicker Title="Logo" Description="The main logo of your icon (better if transparent and high definition)" SizeDescription="Select the size of the logo" Path="{Binding LogoPath, Mode=TwoWay}" Scale="{Binding LogoScale, Mode=TwoWay}" />
+                    <controls:BackgroundPicker Title="Background" Description="Select the main background color of your icon and eventualy a gradient." AndroidDescription="Select the Android icon shape" Shape="{Binding BackgroundShape, Mode=TwoWay}" EndColor="{Binding BackgroundEndColor, Mode=TwoWay, Converter={StaticResource NativeColorConverter}}" Color="{Binding BackgroundColor, Mode=TwoWay, Converter={StaticResource NativeColorConverter}}" GradientMode="{Binding GradientMode, Mode=TwoWay}" HasBorder="{Binding BackgroundHasBorder,Mode=TwoWay}" Margin="0,20,0,0" />
+                    <Button Margin="10,20,0,0" Padding="15" Click="OnExportClick" HorizontalContentAlignment="Left">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Path Fill="White" Stretch="Uniform" Data="M1.979 8l-.979-6h6.972c1.265 1.583 1.327 2 3.306 2h11.722l-.96 4h-2.04l.469-2h-9.191c-2.326 0-3.166-.612-4.278-2h-3.694l.694 4h-2.021zm22.021 2l-2 12h-20l-2-12h6.278l2.308-3 3.9 3h1.97l-1.429-1.097 1.465-1.903 3.9 3h5.608zm-2.331 2h-19.338l1.385 8h16.568l1.385-8z" />
+                            <TextBlock Margin="15,0,0,0" Foreground="White" FontSize="15" Text="Export icons" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </ScrollViewer>
 

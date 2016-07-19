@@ -13,7 +13,7 @@
             <RowDefinition Height="5" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="5" />
-            <RowDefinition Height="25" />
+            <RowDefinition Height="35" />
             <RowDefinition Height="90" />
             <RowDefinition Height="5" />
             <RowDefinition Height="Auto" />
@@ -22,15 +22,15 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="25" />
+            <ColumnDefinition Width="35" />
         </Grid.ColumnDefinitions>
         <Rectangle Grid.RowSpan="10" Width="1" Fill="{StaticResource MiconSemiLightBackgroundBrush}" HorizontalAlignment="Left" />
         <TextBlock Grid.ColumnSpan="2" Margin="10,0,0,0" Foreground="{StaticResource MiconDarkForegroundBrush}" Text="{Binding Title, ElementName=root}" FontSize="13" />
         <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Foreground="{StaticResource MiconDarkForegroundBrush}" Margin="10,0,0,0" Text="{Binding Description, ElementName=root}" Opacity="0.5" FontSize="10" />
         
-        <TextBox Margin="10,0,0,0" Grid.Row="4" Text="{Binding Path, ElementName=root}" VerticalContentAlignment="Center" Background="{StaticResource MiconSemiLightBackgroundBrush}" />
-        <Button Grid.Row="4" Grid.Column="1" Click="Button_Click">
-            <Path Data="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Margin="3" />
+        <TextBox Margin="10,0,0,0" IsEnabled="False" Grid.Row="4" Text="{Binding Path, ElementName=root}" VerticalContentAlignment="Center" Background="{StaticResource MiconSemiLightBackgroundBrush}" />
+        <Button Grid.Row="4" Grid.Column="1" Click="Button_Click" Padding="7">
+            <Path Data="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" />
         </Button>
 
         <Border Grid.Row="5" Margin="10,0,0,0" Grid.ColumnSpan="2">

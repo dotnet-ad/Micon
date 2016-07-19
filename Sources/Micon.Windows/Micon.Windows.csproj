@@ -386,6 +386,20 @@
   <ItemGroup>
     <Resource Include="Assets\icon_picture.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon_menu_new.png" />
+    <Resource Include="Assets\icon_menu_open.png" />
+    <Resource Include="Assets\icon_menu_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon_menu_about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon_menu_export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\icon_menu_quit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

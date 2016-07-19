@@ -33,7 +33,7 @@
         <TextBlock Grid.ColumnSpan="2" Margin="10,0,0,0" Foreground="{StaticResource MiconDarkForegroundBrush}" Text="{Binding Title, ElementName=root}" FontSize="13" />
         <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Foreground="{StaticResource MiconDarkForegroundBrush}" Margin="10,0,0,0" Text="{Binding Description, ElementName=root}" Opacity="0.5" FontSize="10" />
 
-        <xctk:ColorPicker Grid.Row="4" Margin="10,0,0,0" ColorMode="ColorCanvas" ShowAdvancedButton="False" Grid.Column="0" SelectedColor="{StaticResource MiconAccentColor}" UsingAlphaChannel="False" Grid.ColumnSpan="2" Name="colorPicker" Background="{StaticResource MiconSemiLightBackgroundBrush}" SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"></xctk:ColorPicker>
+        <xctk:ColorPicker Grid.Row="4" Margin="10,0,0,0" ColorMode="ColorCanvas" Grid.Column="0" SelectedColor="{StaticResource MiconAccentColor}" UsingAlphaChannel="False" Grid.ColumnSpan="2" Name="colorPicker" Background="{StaticResource MiconSemiLightBackgroundBrush}" SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"></xctk:ColorPicker>
 
         <ComboBox x:Name="gradients" Margin="10,0,0,0" Grid.Row="6" Background="{StaticResource MiconSemiLightBackgroundBrush}" SelectionChanged="gradients_SelectionChanged" Foreground="#555" Grid.ColumnSpan="2">
             <ListBoxItem>No gradient</ListBoxItem>
@@ -41,7 +41,7 @@
             <ListBoxItem>Select gradient</ListBoxItem>
         </ComboBox>
 
-        <xctk:ColorPicker Grid.Row="7" Margin="10,5,0,5" Visibility="Collapsed" ColorMode="ColorCanvas" ShowAdvancedButton="False" Grid.Column="0" SelectedColor="{StaticResource MiconAccentColor}" UsingAlphaChannel="False" Grid.ColumnSpan="2" Name="endColorPicker" SelectedColorChanged="endColorPicker_SelectedColorChanged" Background="{StaticResource MiconSemiLightBackgroundBrush}"></xctk:ColorPicker>
+        <xctk:ColorPicker Grid.Row="7" Margin="10,5,0,5" Visibility="Collapsed" ColorMode="ColorCanvas" Grid.Column="0" SelectedColor="{StaticResource MiconAccentColor}" UsingAlphaChannel="False" Grid.ColumnSpan="2" Name="endColorPicker" SelectedColorChanged="endColorPicker_SelectedColorChanged" Background="{StaticResource MiconSemiLightBackgroundBrush}"></xctk:ColorPicker>
 
         <TextBlock Grid.Row="9" Grid.ColumnSpan="2" Foreground="{StaticResource MiconDarkForegroundBrush}" Margin="10,0,0,0" Text="{Binding AndroidDescription, ElementName=root}" Opacity="0.5" FontSize="10" />
 

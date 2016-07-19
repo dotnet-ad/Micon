@@ -67,7 +67,7 @@ namespace Micon.Windows
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OnExportClick(object sender, RoutedEventArgs e)
         {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
             var result = dialog.ShowDialog();
