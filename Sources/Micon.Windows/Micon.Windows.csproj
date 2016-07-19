@@ -74,6 +74,14 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NGraphics, Version=0.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NGraphics.0.4.0\lib\net45\NGraphics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NGraphics.Net, Version=1.0.5842.23158, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NGraphics.0.4.0\lib\net45\NGraphics.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ReactiveUI, Version=6.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\reactiveui-core.6.5.0\lib\Net45\ReactiveUI.dll</HintPath>
       <Private>True</Private>
@@ -270,8 +278,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\WindowsInfo.cs" />
-    <Compile Include="Graphics\WindowsBitmap.cs" />
-    <Compile Include="Graphics\WindowsBitmapLoader.cs" />
     <Compile Include="Controls\AndroidPreview.xaml.cs">
       <DependentUpon>AndroidPreview.xaml</DependentUpon>
     </Compile>

@@ -1,5 +1,6 @@
 ﻿namespace Micon.Windows.Controls
 {
+    using NGraphics;
     using Portable.Graphics;
     using System.Windows;
 
@@ -12,21 +13,21 @@
         {
             InitializeComponent();
         }
-        public IBitmap WideIcon
+        public IImage WideIcon
         {
-            get { return (IBitmap)GetValue(WideIconProperty); }
+            get { return (IImage)GetValue(WideIconProperty); }
             set { SetValue(WideIconProperty, value); }
         }
 
-        public static readonly DependencyProperty WideIconProperty = DependencyProperty.Register(nameof(WideIcon), typeof(IBitmap), typeof(WindowsPreview), new PropertyMetadata(null));
+        public static readonly DependencyProperty WideIconProperty = DependencyProperty.Register(nameof(WideIcon), typeof(IImage), typeof(WindowsPreview), new PropertyMetadata(null));
 
-        public IBitmap SmallIcon
+        public IImage SmallIcon
         {
-            get { return (IBitmap)GetValue(SmallIconProperty); }
+            get { return (IImage)GetValue(SmallIconProperty); }
             set { SetValue(SmallIconProperty, value); }
         }
 
-        public static readonly DependencyProperty SmallIconProperty = DependencyProperty.Register(nameof(SmallIcon), typeof(IBitmap), typeof(WindowsPreview), new PropertyMetadata(null));
+        public static readonly DependencyProperty SmallIconProperty = DependencyProperty.Register(nameof(SmallIcon), typeof(IImage), typeof(WindowsPreview), new PropertyMetadata(null));
 
 
     }

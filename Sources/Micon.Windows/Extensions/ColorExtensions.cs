@@ -9,20 +9,20 @@
             return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", c.A, c.R, c.G, c.B);
         }
 
-        public static Portable.Graphics.Color FromNative(this Color native)
+        public static NGraphics.Color FromNative(this Color native)
         {
-            return Portable.Graphics.Color.FromRgb(
+            return NGraphics.Color.FromRGB(
                 native.R / 255.0,
                 native.G / 255.0,
                 native.B / 255.0
             );
         }
-        public static Color ToNative(this Portable.Graphics.Color portable)
+        public static Color ToNative(this NGraphics.Color portable)
         {
             return Color.FromRgb(
-                (byte)((int)(255 * portable.R)),
-                (byte)((int)(255 * portable.G)),
-                (byte)((int)(255 * portable.B))
+                (byte)((int)(255 * portable.Red)),
+                (byte)((int)(255 * portable.Green)),
+                (byte)((int)(255 * portable.Blue))
             );
         }
 

@@ -12,7 +12,7 @@
     {
         public override bool CanConvert(Type objectType)
         {
-            return objectType.GetTypeInfo().IsAssignableFrom(typeof(Color).GetTypeInfo());
+            return objectType.GetTypeInfo().IsAssignableFrom(typeof(NGraphics.Color).GetTypeInfo());
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -29,7 +29,7 @@
                 var g = array[1];
                 var b = array[2];
 
-                return Color.FromRgb(r, g, b);
+                return NGraphics.Color.FromRGB(r, g, b);
             }
 
             return null;
@@ -37,7 +37,7 @@
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var color = value as Color;
+            var color = (NGraphics.Color)value;
 
             if(color != null)
             {

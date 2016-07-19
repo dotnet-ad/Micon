@@ -14,11 +14,14 @@
     using Platform;
     using Files;
     using ViewModels.Items;
-
+    using NGraphics;
+    using Extensions;
     public class HomeViewModel: ReactiveObject
 	{
-		public HomeViewModel(IBitmapLoader loader, IStorage storage, ILauncher launcher, IInfo info, IIconGenerator generator)
+		public HomeViewModel(IPlatform platform, IStorage storage, ILauncher launcher, IInfo info, IIconGenerator generator)
         {
+            this.platform = platform;
+
             //Icons
             var icons = new List<Icon>();
             icons.AddRange(Icons.Load(Icons.iOS));
@@ -30,7 +33,6 @@
             
             //Depdencies
             this.info = info;
-            this.loader = loader;
             this.generator = generator;
             this.storage = storage;
             this.launcher = launcher;
@@ -100,9 +102,7 @@
         private readonly IStorage storage;
 
         private string path;
-
-        readonly IBitmapLoader loader;
-
+        
 		readonly IIconGenerator generator;
 
         private IEnumerable<Icon> icons;
@@ -123,6 +123,7 @@
         private readonly IInfo info;
 
         private readonly List<Icon> defaultIcons;
+        private readonly IPlatform platform;
 
         #endregion
 
@@ -137,7 +138,7 @@
         public string Version { get { return this.info.GetApplicationVersion(); } }
 
         [Reactive]
-        public IBitmap Logo { get; set; }
+        public IImage Logo { get; set; }
 
         [Reactive]
         public double LogoScale { get; set; }
@@ -167,7 +168,7 @@
 
         #region Bound commands
 
-        public ReactiveCommand<IBitmap> LoadLogoCommand { get; private set; }
+        public ReactiveCommand<IImage> LoadLogoCommand { get; private set; }
 
 		public ReactiveCommand<PreviewItemViewModel> PreviewCommand { get; private set; }
 
@@ -226,13 +227,13 @@
             return f;
         }
 
-        private async Task<IBitmap> ExecuteLoadImageCommand(object parameter)
+        private async Task<IImage> ExecuteLoadImageCommand(object parameter)
 		{
 			var path = parameter as string;
 
             if(!string.IsNullOrEmpty(path))
             {
-                var r = await this.loader.LoadAsync(path);
+                var r = this.platform.LoadImage(path);
                 this.path = path;
                 return r;
             }
@@ -246,8 +247,8 @@
             this.iconsPreview = defaultIconPreview;
             this.LogoPath = null;
             this.LogoScale = 1.0;
-            this.BackgroundColor = Color.FromRgb(0x45, 0x99, 0xd9);
-            this.BackgroundEndColor = Color.FromRgb(0x45, 0x99, 0xd9);
+            this.BackgroundColor = Color.FromRGB(0x4599d9);
+            this.BackgroundEndColor = Color.FromRGB(0x4599d9);
             this.BackgroundHasBorder = true;
             this.BackgroundShape = Shape.Rectangle;
             this.GradientMode = GradientMode.None;
@@ -267,12 +268,12 @@
         {
             var output = parameter as string;
 
-            var bitmaps = this.icons.Select((x) => new { Icon = x, Bitmap = Generate(x) });
-
-            var saves = bitmaps.Select((x) => x.Bitmap.Save(Path.Combine(output, $"{x.Icon.Name}.png")));
-
-            await Task.WhenAll(saves);
-
+            foreach (var icon in this.icons)
+            {
+                var bitmap = Generate(icon);
+                bitmap.GetImage().SaveAsPng(System.IO.Path.Combine(output, $"{icon.Name}.png"));
+            }
+            
             return output;
         }
 
@@ -284,12 +285,12 @@
 
         #region Icons
 
-        private IBitmap Generate(Icon icon)
+        private IImageCanvas Generate(Icon icon)
         {
             return this.Generate(icon, this.Logo, this.LogoScale, this.BackgroundColor, this.BackgroundEndColor, this.BackgroundShape, this.BackgroundHasBorder , this.GradientMode);
         }
 
-        private IBitmap Generate(Icon icon, IBitmap logo, double scale, Color color, Color endColor, Shape shape, bool hasBorder, GradientMode gradient)
+        private IImageCanvas Generate(Icon icon, IImage logo, double scale, Color color, Color endColor, Shape shape, bool hasBorder, GradientMode gradient)
         {
             var result = new Icon(icon);
             result.HasBorder &= hasBorder;
@@ -307,15 +308,15 @@
         }
 
 
-        private PreviewItemViewModel CreatePreview(IBitmap logo, double scale, Color color, Color endColor, Shape shape, bool hasBorder, GradientMode gradient)
+        private PreviewItemViewModel CreatePreview(IImage logo, double scale, Color color, Color endColor, Shape shape, bool hasBorder, GradientMode gradient)
         {
             return new PreviewItemViewModel()
             {
-                Apple = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"iOS/{this.iconsPreview.Apple}"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                Android = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Android/{this.iconsPreview.Android}"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                Windows = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{this.iconsPreview.Windows}"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                WindowsSmall = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{this.iconsPreview.WindowsSmall}"), logo, scale, color, endColor, shape, hasBorder, gradient),
-                WindowsWide = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{this.iconsPreview.WindowsWide}"), logo, scale, color, endColor, shape, hasBorder, gradient),
+                Apple = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"iOS/{this.iconsPreview.Apple}"), logo, scale, color, endColor, shape, hasBorder, gradient)?.GetImage(),
+                Android = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Android/{this.iconsPreview.Android}"), logo, scale, color, endColor, shape, hasBorder, gradient)?.GetImage(),
+                Windows = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{this.iconsPreview.Windows}"), logo, scale, color, endColor, shape, hasBorder, gradient)?.GetImage(),
+                WindowsSmall = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{this.iconsPreview.WindowsSmall}"), logo, scale, color, endColor, shape, hasBorder, gradient)?.GetImage(),
+                WindowsWide = this.Generate(this.icons.FirstOrDefault((i) => i.Name == $"Windows/{this.iconsPreview.WindowsWide}"), logo, scale, color, endColor, shape, hasBorder, gradient)?.GetImage(),
             };
         }
 
@@ -323,11 +324,11 @@
         {
             if (gradient == GradientMode.Auto)
             {
-                endColor = color?.Lerp(color.CreateGradientOpposite(), color.Lightness * 0.75);
+                endColor = color.Lerp(color.CreateGradientOpposite(), color.Brightness * 0.75);
             }
             else if (this.GradientMode == GradientMode.None)
             {
-                endColor = null;
+                endColor = color;
             }
 
             return endColor;

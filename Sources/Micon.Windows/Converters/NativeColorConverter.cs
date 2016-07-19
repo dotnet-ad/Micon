@@ -9,7 +9,7 @@
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var portable = value as Portable.Graphics.Color;
+            var portable = (NGraphics.Color)value;
             if (portable == null)
                 return null;
 

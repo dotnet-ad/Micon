@@ -1,6 +1,7 @@
 ﻿namespace Micon.Portable.Generation
 {
     using Graphics;
+    using NGraphics;
     using System;
 
     public class Icon
@@ -20,7 +21,7 @@
         public Icon(Icon icon) : this(icon.Name, icon.Width, icon.Height)
         {
             Scale = icon.Scale;
-            ImageArea = new Rectangle(icon.ImageArea.X, icon.ImageArea.Y, icon.ImageArea.Width, icon.ImageArea.Height);
+            ImageArea = new Rect(icon.ImageArea.X, icon.ImageArea.Y, icon.ImageArea.Width, icon.ImageArea.Height);
             BackgroundColor = icon.BackgroundColor;
             BackgroundShape = icon.BackgroundShape;
             HasBorder = icon.HasBorder;
@@ -36,16 +37,16 @@
 
 		public int Height { get; set; }
         
-        private Rectangle imageArea;
+        private Rect imageArea;
 
-        public Rectangle ImageArea
+        public Rect ImageArea
         {
             get
             {
-                if(imageArea == null)
+                if(imageArea.Width == 0 && imageArea.Height == 0)
                 {
                     var areaSize = Math.Min(this.Width, this.Height);
-                    return new Rectangle((this.Width / 2) - (areaSize / 2), (this.Height / 2) - (areaSize / 2), areaSize, areaSize);
+                    return new Rect((this.Width / 2) - (areaSize / 2), (this.Height / 2) - (areaSize / 2), areaSize, areaSize);
                 }
                 return imageArea;
             }

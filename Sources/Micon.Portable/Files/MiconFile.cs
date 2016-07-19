@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Graphics;
     using Generation;
-
+    using NGraphics;
     public class MiconPreview
     {
         public string Android { get; set; }

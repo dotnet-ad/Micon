@@ -5,7 +5,7 @@
     using System.Windows.Media;
     using System.Windows.Media.Animation;
     using Portable.Graphics;
-
+    using NGraphics;
     public class Preview : UserControl
     {
         public string ScreenBackground
@@ -14,21 +14,21 @@
             set { SetValue(IconProperty, value); }
         }
 
-        public Brush ScreenForeground
+        public System.Drawing.Brush ScreenForeground
         {
-            get { return (Brush)GetValue(ScreenForegroundProperty); }
+            get { return (System.Drawing.Brush)GetValue(ScreenForegroundProperty); }
             set { SetValue(ScreenForegroundProperty, value); }
         }
 
-        public IBitmap Icon
+        public IImage Icon
         {
-            get { return (IBitmap)GetValue(IconProperty); }
+            get { return (IImage)GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
         }
 
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(nameof(Icon), typeof(IBitmap), typeof(Preview), new PropertyMetadata(null));
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(nameof(Icon), typeof(IImage), typeof(Preview), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ScreenForegroundProperty = DependencyProperty.Register(nameof(ScreenForeground), typeof(Brush), typeof(Preview), new PropertyMetadata(new SolidColorBrush(Colors.White)));
+        public static readonly DependencyProperty ScreenForegroundProperty = DependencyProperty.Register(nameof(ScreenForeground), typeof(System.Windows.Media.Brush), typeof(Preview), new PropertyMetadata((System.Windows.Media.Brush)new SolidColorBrush(System.Windows.Media.Colors.White)));
 
         public static readonly DependencyProperty ScreenBackgroundProperty = DependencyProperty.Register(nameof(ScreenBackground), typeof(string), typeof(Preview), new PropertyMetadata(null));
         

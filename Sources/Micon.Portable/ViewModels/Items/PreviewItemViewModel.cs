@@ -1,6 +1,7 @@
 ﻿namespace Micon.Portable.ViewModels.Items
 {
     using Graphics;
+    using NGraphics;
     using ReactiveUI;
     using ReactiveUI.Fody.Helpers;
 
@@ -12,19 +13,19 @@
 		}
 
         [Reactive]
-        public IBitmap Apple { get; set; }
+        public IImage Apple { get; set; }
 
         [Reactive]
-        public IBitmap Android { get; set; }
+        public IImage Android { get; set; }
 
         [Reactive]
-        public IBitmap Windows { get; set; }
+        public IImage Windows { get; set; }
 
         [Reactive]
-        public IBitmap WindowsWide { get; set; }
+        public IImage WindowsWide { get; set; }
 
         [Reactive]
-        public IBitmap WindowsSmall { get; set; }
+        public IImage WindowsSmall { get; set; }
     }
 }
 
