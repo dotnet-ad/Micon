@@ -1,16 +1,13 @@
-﻿using Micon.Portable.Generation;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Micon.Portable.Files
+﻿namespace Micon.Portable.Files
 {
+    using Graphics;
+    using Newtonsoft.Json;
+    using System;
+    using System.Reflection;
+
+    /// <summary>
+    /// Custom converter for serializing color to json double arrays.
+    /// </summary>
     public class ColorConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)

@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Micon.Portable.Bitmaps;
-using Micon.Portable.Generation;
-using ReactiveUI;
-using System.Reactive.Linq;
-using ReactiveUI.Fody.Helpers;
-using System.Linq;
-using Micon.Portable.Data;
-using System.IO;
-using Micon.Portable.Platform;
-using Micon.Portable.Files;
-
-namespace Micon.Portable
+﻿namespace Micon.Portable
 {
-	public class HomeViewModel: ReactiveObject
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using ReactiveUI;
+    using System.Reactive.Linq;
+    using ReactiveUI.Fody.Helpers;
+    using System.Linq;
+    using System.IO;
+    using Data;
+    using Graphics;
+    using Generation;
+    using Platform;
+    using Files;
+    using ViewModels.Items;
+
+    public class HomeViewModel: ReactiveObject
 	{
-		public HomeViewModel(IBitmapLoader loader, IStorage storage, ILauncher launcher, IInfo info, IconGenerator generator)
+		public HomeViewModel(IBitmapLoader loader, IStorage storage, ILauncher launcher, IInfo info, IIconGenerator generator)
         {
             //Icons
             var icons = new List<Icon>();
@@ -102,7 +103,7 @@ namespace Micon.Portable
 
         readonly IBitmapLoader loader;
 
-		readonly IconGenerator generator;
+		readonly IIconGenerator generator;
 
         private IEnumerable<Icon> icons;
 
@@ -290,7 +291,7 @@ namespace Micon.Portable
 
         private IBitmap Generate(Icon icon, IBitmap logo, double scale, Color color, Color endColor, Shape shape, bool hasBorder, GradientMode gradient)
         {
-            var result = icon.Copy();
+            var result = new Icon(icon);
             result.HasBorder &= hasBorder;
             result.BackgroundColor = color;
             result.BackgroundEndColor = GetEndColor(color,endColor,gradient);
@@ -322,7 +323,7 @@ namespace Micon.Portable
         {
             if (gradient == GradientMode.Auto)
             {
-                endColor = color?.Lerp(color.CreateOpposite(), color.Lightness * 0.75);
+                endColor = color?.Lerp(color.CreateGradientOpposite(), color.Lightness * 0.75);
             }
             else if (this.GradientMode == GradientMode.None)
             {

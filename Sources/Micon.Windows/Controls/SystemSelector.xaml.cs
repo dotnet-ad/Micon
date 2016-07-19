@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace Micon.Windows.Controls
+﻿namespace Micon.Windows.Controls
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Shapes;
+
     public enum SystemMode
     {
         All,
@@ -37,7 +29,7 @@ namespace Micon.Windows.Controls
 
         }
 
-        public static readonly DependencyProperty SystemModeProperty = DependencyProperty.Register("SystemMode", typeof(SystemMode), typeof(SystemSelector), new FrameworkPropertyMetadata(SystemMode.All, OnSystemModePropertyChanged));
+        public static readonly DependencyProperty SystemModeProperty = DependencyProperty.Register(nameof(SystemMode), typeof(SystemMode), typeof(SystemSelector), new FrameworkPropertyMetadata(SystemMode.All, OnSystemModePropertyChanged));
 
         public SystemMode SystemMode
         {
@@ -45,7 +37,7 @@ namespace Micon.Windows.Controls
             set { SetValue(SystemModeProperty, value); }
         }
 
-        public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register("SelectedIndex", typeof(int), typeof(SystemSelector), new FrameworkPropertyMetadata(0, OnSelectedIndexPropertyChanged));
+        public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register(nameof(SelectedIndex), typeof(int), typeof(SystemSelector), new FrameworkPropertyMetadata(0, OnSelectedIndexPropertyChanged));
 
         public int SelectedIndex
         {

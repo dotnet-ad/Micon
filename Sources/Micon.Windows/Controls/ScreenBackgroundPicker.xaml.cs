@@ -1,4 +1,5 @@
 ﻿using Micon.Portable.Generation;
+using Micon.Portable.ViewModels.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;

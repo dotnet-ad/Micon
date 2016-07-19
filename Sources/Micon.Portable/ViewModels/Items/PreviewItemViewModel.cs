@@ -1,6 +1,6 @@
-﻿namespace Micon.Portable
+﻿namespace Micon.Portable.ViewModels.Items
 {
-    using Micon.Portable.Bitmaps;
+    using Graphics;
     using ReactiveUI;
     using ReactiveUI.Fody.Helpers;
 

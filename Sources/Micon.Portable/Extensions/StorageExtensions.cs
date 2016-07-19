@@ -1,6 +1,6 @@
 ﻿namespace Micon
 {
-    using Micon.Portable.Platform;
+    using Portable.Platform;
     using Newtonsoft.Json;
     using System.Threading.Tasks;
 

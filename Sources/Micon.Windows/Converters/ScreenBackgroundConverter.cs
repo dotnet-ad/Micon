@@ -1,15 +1,12 @@
-﻿using Micon.Portable.Generation;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Media;
-
-namespace Micon.Windows.Converters
+﻿namespace Micon.Windows.Converters
 {
+    using Portable.Generation;
+    using Portable.ViewModels.Items;
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+    using System.Windows.Media;
+
     public class ScreenBackgroundConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -24,8 +21,7 @@ namespace Micon.Windows.Converters
                     default: return "/Assets/device_background_001.png";
                 }
             }
-
-
+            
             switch (bg)
             {
                 case ScreenBackground.Light: return new SolidColorBrush(Colors.Black) ;

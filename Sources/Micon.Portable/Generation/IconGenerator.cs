@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Micon.Portable.Bitmaps;
-
-namespace Micon.Portable.Generation
+﻿namespace Micon.Portable.Generation
 {
-	public class IconGenerator
-	{
+    using Graphics;
+
+    public class IconGenerator : IIconGenerator
+    {
 		public IconGenerator(IBitmapLoader loader)
 		{
 			// Dependencies

@@ -10,7 +10,7 @@ namespace Micon
 		public static void RegisterShared(this ContainerBuilder container)
         {
             //Services
-            container.RegisterType<IconGenerator>();
+            container.RegisterType<IconGenerator>().As<IIconGenerator>();
 
             //ViewModels
             container.RegisterType<HomeViewModel>();

@@ -1,14 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Micon.Portable.Generation
+﻿namespace Micon.Portable.Graphics
 {
+    using System;
+
+    /// <summary>
+    /// Represents a digital color.
+    /// </summary>
     public class Color
     {
+        /// <summary>
+        /// Main constructor.
+        /// </summary>
         private Color()
         {
 
@@ -18,24 +19,40 @@ namespace Micon.Portable.Generation
 
         private double r,g,b;
 
+        /// <summary>
+        /// The red component of the color (between 0 and 1).
+        /// </summary>
         public double R
         {
             get { return r; }
             set { r = Math.Min(1,Math.Max(0,value)); }
         }
-        
+
+        /// <summary>
+        /// The green component of the color (between 0 and 1).
+        /// </summary>
         public double G
         {
             get { return g; }
             set { g = Math.Min(1, Math.Max(0, value)); }
         }
-        
+
+        /// <summary>
+        /// The blue component of the color (between 0 and 1).
+        /// </summary>
         public double B
         {
             get { return b; }
             set { b = Math.Min(1, Math.Max(0, value)); }
         }
 
+        /// <summary>
+        /// Creates a new color from RGB amount components.
+        /// </summary>
+        /// <param name="r">Red component (between 0 and 1).</param>
+        /// <param name="g">Green component (between 0 and 1).</param>
+        /// <param name="b">Blue component (between 0 and 1).</param>
+        /// <returns>The color</returns>
         public static Color FromRgb(double r, double g, double b)
         {
             return new Color()
@@ -45,6 +62,14 @@ namespace Micon.Portable.Generation
                 B = b,
             };
         }
+
+        /// <summary>
+        /// Creates a new color from RGB byte components.
+        /// </summary>
+        /// <param name="r">Red component (between 0 and 255).</param>
+        /// <param name="g">Green component (between 0 and 255).</param>
+        /// <param name="b">Blue component (between 0 and 255).</param>
+        /// <returns>The color</returns>
         public static Color FromRgb(byte r, byte g, byte b)
         {
             return Color.FromRgb(r/255.0, g / 255.0, b / 255.0);
@@ -54,6 +79,9 @@ namespace Micon.Portable.Generation
 
         #region HSL
         
+        /// <summary>
+        /// The hue component (in Hue/Saturation/Lightness representation).
+        /// </summary>
         public double Hue
         {
             get
@@ -82,7 +110,10 @@ namespace Micon.Portable.Generation
             }
 
         }
-        
+
+        /// <summary>
+        /// The saturation component (in Hue/Saturation/Lightness representation).
+        /// </summary>
         public double Saturation
         {
             get
@@ -102,6 +133,9 @@ namespace Micon.Portable.Generation
             }
         }
 
+        /// <summary>
+        /// The lightness component (in Hue/Saturation/Lightness representation).
+        /// </summary>
         public double Lightness
         {
             get
@@ -111,7 +145,7 @@ namespace Micon.Portable.Generation
                 return (min + max) / 2;
             }
         }
-
+        
         private static double HslTest(double v,double t1, double t2)
         {
             if (6.0 * v < 1.0)
@@ -184,6 +218,12 @@ namespace Micon.Portable.Generation
         
         #region Utilities
 
+        /// <summary>
+        /// Lerp the value from one color to another.
+        /// </summary>
+        /// <param name="to">Destination color</param>
+        /// <param name="amount">Amount of merge</param>
+        /// <returns>The resulting color</returns>
         public Color Lerp(Color to, double amount)
         {
             double sr = this.R, sg = this.G, sb = this.B;
@@ -196,21 +236,29 @@ namespace Micon.Portable.Generation
             return Color.FromRgb(r, g, b);
         }
 
+        /// <summary>
+        /// Creates a copy of a color.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public static Color FromColor(Color other)
         {
             return Color.FromRgb(other.R, other.G, other.B);
         }
 
-        public Color CreateOpposite()
+        /// <summary>
+        /// Creates a suggested color that fits for gradients.
+        /// </summary>
+        /// <returns>The corresponding color</returns>
+        public Color CreateGradientOpposite()
         {
             var h = this.Hue;
             var s = this.Saturation;
             var l = this.Lightness;
 
-            return Micon.Portable.Generation.Color.FromHsl(h + 240.0, s, l);
+            return Color.FromHsl(h + 240.0, s, l);
         }
 
         #endregion
-
     }
 }

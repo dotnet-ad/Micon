@@ -1,9 +1,10 @@
-﻿using Micon.Portable.Generation;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-
-namespace Micon.Portable.Files
+﻿namespace Micon.Portable.Files
 {
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using Graphics;
+    using Generation;
+
     public class MiconPreview
     {
         public string Android { get; set; }
@@ -17,6 +18,9 @@ namespace Micon.Portable.Files
         public string WindowsWide { get; set; }
     }
 
+    /// <summary>
+    /// Represents the content of a file.
+    /// </summary>
     public class MiconFile
     {
         public string LogoPath { get; set; }

@@ -1,13 +1,12 @@
-﻿using System;
-using Micon.Windows.Bitmaps;
-using Micon.Portable.Bitmaps;
-using Autofac;
-using Micon.Windows.Platform;
-using Micon.Portable.Platform;
-
-namespace Micon
+﻿namespace Micon
 {
-	public static class WindowsDependencies
+    using Autofac;
+    using Windows.Platform;
+    using Portable.Platform;
+    using Windows.Graphics;
+    using Portable.Graphics;
+
+    public static class WindowsDependencies
 	{
 		public static void RegisterPlatform(this ContainerBuilder container)
         {

@@ -1,20 +1,15 @@
-﻿using Micon.Portable;
-using Micon.Portable.Bitmaps;
-using Micon.Windows.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-
-namespace Micon.Windows.Bitmaps
+﻿namespace Micon.Windows.Graphics
 {
+    using Portable.Graphics;
+    using Helpers;
+    using System;
+    using System.IO;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+
     public class WindowsBitmap : IBitmap
     {
         public WindowsBitmap(int width, int height)
@@ -86,7 +81,7 @@ namespace Micon.Windows.Bitmaps
             return Task.FromResult(true);
         }
         
-        private Brush CreateBrush(Micon.Portable.Generation.Color color, Micon.Portable.Generation.Color endColor)
+        private Brush CreateBrush(Portable.Graphics.Color color, Portable.Graphics.Color endColor)
         {
             var baseColor = color.ToNative();
 
@@ -96,21 +91,21 @@ namespace Micon.Windows.Bitmaps
             return new LinearGradientBrush(baseColor, endColor.ToNative(), 95);
         }
 
-        private Brush CreateBorderBrush(Micon.Portable.Generation.Color color, Micon.Portable.Generation.Color endColor)
+        private Brush CreateBorderBrush(Portable.Graphics.Color color, Portable.Graphics.Color endColor)
         {
             var l = color.Lightness;
 
-            var darkColor = color.Lerp(Micon.Portable.Generation.Color.FromRgb(0, 0, 0), l * 0.20).ToNative();
+            var darkColor = color.Lerp(Portable.Graphics.Color.FromRgb(0, 0, 0), l * 0.20).ToNative();
 
             if (endColor == null)
                 return new SolidColorBrush(darkColor);
 
-            var endDarkColor = endColor.Lerp(Micon.Portable.Generation.Color.FromRgb(0, 0, 0), l * 0.40).ToNative();
+            var endDarkColor = endColor.Lerp(Portable.Graphics.Color.FromRgb(0, 0, 0), l * 0.40).ToNative();
 
             return new LinearGradientBrush(darkColor, endDarkColor, 95);
         }
 
-        public void DrawCircle(Micon.Portable.Generation.Color color, Micon.Portable.Generation.Color endColor, bool border)
+        public void DrawCircle(Portable.Graphics.Color color, Portable.Graphics.Color endColor, bool border)
         {
             var circle = new System.Windows.Shapes.Ellipse() {
                 Fill = CreateBrush(color, endColor),
@@ -130,7 +125,7 @@ namespace Micon.Windows.Bitmaps
             this.Image.Render(circle);
         }
 
-        public void DrawRectangle(Micon.Portable.Generation.Color color, Micon.Portable.Generation.Color endColor, bool border, double cornerRadius)
+        public void DrawRectangle(Portable.Graphics.Color color, Portable.Graphics.Color endColor, bool border, double cornerRadius)
         {
             var rect = new Border()
             {

@@ -1,7 +1,6 @@
-﻿namespace Micon.Windows.Bitmaps
+﻿namespace Micon.Windows.Platform
 {
-    using System;
-    using Micon.Portable.Platform;
+    using Portable.Platform;
     using System.Deployment.Application;
     public class WindowsInfo : IInfo
     {

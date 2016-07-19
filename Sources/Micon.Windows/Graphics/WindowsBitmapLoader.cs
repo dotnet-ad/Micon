@@ -1,12 +1,8 @@
-﻿using Micon.Portable.Bitmaps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Micon.Windows.Bitmaps
+﻿namespace Micon.Windows.Graphics
 {
+    using System.Threading.Tasks;
+    using Portable.Graphics;
+
     public class WindowsBitmapLoader : IBitmapLoader
     {
         public WindowsBitmapLoader()

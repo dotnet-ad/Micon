@@ -1,8 +1,15 @@
-﻿using System;
-namespace Micon.Portable
+﻿namespace Micon.Portable.Graphics
 {
+    /// <summary>
+    /// A rectangle.
+    /// </summary>
 	public class Rectangle
 	{
+        public Rectangle()
+        {
+
+        }
+
 		public Rectangle(int x, int y, int width, int height)
 		{
 			this.X = x;

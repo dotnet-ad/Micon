@@ -1,16 +1,11 @@
-﻿using Micon.Portable.Bitmaps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-
-namespace Micon.Windows.Controls
+﻿namespace Micon.Windows.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using System.Windows.Media.Animation;
+    using Portable.Graphics;
+
     public class Preview : UserControl
     {
         public string ScreenBackground

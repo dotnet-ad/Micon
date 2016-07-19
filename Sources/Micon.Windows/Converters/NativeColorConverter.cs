@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Media;
-
-namespace Micon.Windows.Converters
+﻿namespace Micon.Windows.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+    using System.Windows.Media;
+
     public class NativeColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var portable = value as Micon.Portable.Generation.Color;
+            var portable = value as Portable.Graphics.Color;
             if (portable == null)
                 return null;
 
@@ -22,7 +18,7 @@ namespace Micon.Windows.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var native =(Color) value;
+            var native = (Color) value;
             return native.FromNative();
         }
     }

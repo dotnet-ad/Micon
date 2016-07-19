@@ -1,9 +1,9 @@
-﻿using System;
-
-namespace Micon.Portable.Generation
+﻿namespace Micon.Portable.Generation
 {
+    using Graphics;
+    using System;
 
-	public class Icon
+    public class Icon
 	{
         public Icon()
         {
@@ -15,6 +15,15 @@ namespace Micon.Portable.Generation
             this.Name = name;
 			this.Width = width;
 			this.Height = height;
+        }
+
+        public Icon(Icon icon) : this(icon.Name, icon.Width, icon.Height)
+        {
+            Scale = icon.Scale;
+            ImageArea = new Rectangle(icon.ImageArea.X, icon.ImageArea.Y, icon.ImageArea.Width, icon.ImageArea.Height);
+            BackgroundColor = icon.BackgroundColor;
+            BackgroundShape = icon.BackgroundShape;
+            HasBorder = icon.HasBorder;
         }
 
         public Icon(string name, int size) : this(name, size, size)
@@ -53,18 +62,6 @@ namespace Micon.Portable.Generation
         public Shape BackgroundShape { get; set; }
         
         public bool HasBorder { get; set; }
-
-        public Icon Copy()
-        {
-            return new Icon(this.Name, this.Width, this.Height)
-            {
-                Scale = Scale,
-                ImageArea = new Rectangle(this.ImageArea.X, this.ImageArea.Y, this.ImageArea.Width, this.ImageArea.Height),
-                BackgroundColor = BackgroundColor,
-                BackgroundShape = BackgroundShape,
-                HasBorder = HasBorder,
-            };
-        }
     }
 }
 

@@ -1,4 +1,4 @@
-﻿namespace Micon.Portable.Generation
+﻿namespace Micon.Portable.ViewModels.Items
 {
     public enum ScreenBackground
     {

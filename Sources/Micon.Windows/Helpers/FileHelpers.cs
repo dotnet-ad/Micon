@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Micon.Windows.Helpers
+﻿namespace Micon.Windows.Helpers
 {
     public static class FileHelpers
     {

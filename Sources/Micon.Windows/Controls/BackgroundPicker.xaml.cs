@@ -64,21 +64,21 @@
 
         public static readonly DependencyProperty EndColorProperty = DependencyProperty.Register(nameof(EndColor), typeof(Color), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Color.FromArgb(0, 0, 0, 0), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnBackgroundEndColorChanged));
 
-        public Portable.Generation.Shape Shape
+        public Portable.Graphics.Shape Shape
         {
-            get { return (Portable.Generation.Shape)GetValue(ShapeProperty); }
+            get { return (Portable.Graphics.Shape)GetValue(ShapeProperty); }
             set { SetValue(ShapeProperty, value); }
         }
 
-        public static readonly DependencyProperty ShapeProperty = DependencyProperty.Register(nameof(Shape), typeof(Portable.Generation.Shape), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Generation.Shape.Rectangle, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnShapeChanged));
+        public static readonly DependencyProperty ShapeProperty = DependencyProperty.Register(nameof(Shape), typeof(Portable.Graphics.Shape), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Graphics.Shape.Rectangle, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnShapeChanged));
 
-        public Portable.Generation.GradientMode GradientMode
+        public Portable.Graphics.GradientMode GradientMode
         {
-            get { return (Portable.Generation.GradientMode)GetValue(GradientModeProperty); }
+            get { return (Portable.Graphics.GradientMode)GetValue(GradientModeProperty); }
             set { SetValue(GradientModeProperty, value); }
         }
 
-        public static readonly DependencyProperty GradientModeProperty = DependencyProperty.Register(nameof(GradientMode), typeof(Portable.Generation.GradientMode), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Generation.GradientMode.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnGradientChanged));
+        public static readonly DependencyProperty GradientModeProperty = DependencyProperty.Register(nameof(GradientMode), typeof(Portable.Graphics.GradientMode), typeof(BackgroundPicker), new FrameworkPropertyMetadata(Portable.Graphics.GradientMode.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnGradientChanged));
 
         public bool HasBorder
         {
@@ -104,15 +104,15 @@
         {
             if (this.shapes.SelectedIndex == 0)
             {
-                this.Shape = Portable.Generation.Shape.Rectangle;
+                this.Shape = Portable.Graphics.Shape.Rectangle;
             }
             else if (this.shapes.SelectedIndex == 1)
             {
-                this.Shape = Portable.Generation.Shape.RoundedRectangle;
+                this.Shape = Portable.Graphics.Shape.RoundedRectangle;
             }
             else if (this.shapes.SelectedIndex == 2)
             {
-                this.Shape = Portable.Generation.Shape.Circle;
+                this.Shape = Portable.Graphics.Shape.Circle;
             }
         }
 
@@ -120,17 +120,17 @@
         {
             if (this.gradients.SelectedIndex == 0)
             {
-                this.GradientMode = Portable.Generation.GradientMode.None;
+                this.GradientMode = Portable.Graphics.GradientMode.None;
                 this.endColorPicker.Visibility = Visibility.Collapsed;
             }
             else if (this.gradients.SelectedIndex == 1)
             {
-                this.GradientMode = Portable.Generation.GradientMode.Auto;
+                this.GradientMode = Portable.Graphics.GradientMode.Auto;
                 this.endColorPicker.Visibility = Visibility.Collapsed;
             }
             else if (this.gradients.SelectedIndex == 2)
             {
-                this.GradientMode = Portable.Generation.GradientMode.Select;
+                this.GradientMode = Portable.Graphics.GradientMode.Select;
                 this.endColorPicker.Visibility = Visibility.Visible;
             }
         }
@@ -152,14 +152,14 @@
         private static void OnShapeChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             var picker = source as BackgroundPicker;
-            var shape = (Portable.Generation.Shape)e.NewValue;
+            var shape = (Portable.Graphics.Shape)e.NewValue;
 
             switch (shape)
             {
-                case Portable.Generation.Shape.RoundedRectangle:
+                case Portable.Graphics.Shape.RoundedRectangle:
                     picker.shapes.SelectedIndex = 1;
                     break;
-                case Portable.Generation.Shape.Circle:
+                case Portable.Graphics.Shape.Circle:
                     picker.shapes.SelectedIndex = 2;
                     break;
                 default:
@@ -170,14 +170,14 @@
         private static void OnGradientChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             var picker = source as BackgroundPicker;
-            var gradient = (Portable.Generation.GradientMode)e.NewValue;
+            var gradient = (Portable.Graphics.GradientMode)e.NewValue;
 
             switch (gradient)
             {
-                case Portable.Generation.GradientMode.Auto:
+                case Portable.Graphics.GradientMode.Auto:
                     picker.gradients.SelectedIndex = 1;
                     break;
-                case Portable.Generation.GradientMode.Select:
+                case Portable.Graphics.GradientMode.Select:
                     picker.gradients.SelectedIndex = 2;
                     break;
                 default:
