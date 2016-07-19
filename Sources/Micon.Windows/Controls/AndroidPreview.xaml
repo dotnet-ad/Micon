@@ -57,7 +57,7 @@
         <TextBlock Visibility="{Binding Icon, ElementName=root, Converter={StaticResource VisibilityConverter}}" Foreground="{Binding ScreenForeground,ElementName=root}" Text="App" Grid.Row="2" Grid.Column="1" TextAlignment="Center" FontSize="10" Margin="0,2,0,0" FontWeight="Light" Grid.RowSpan="2" />
         <Rectangle x:Name="iconImage" Grid.Row="1" Grid.Column="1" Stretch="Uniform">
             <Rectangle.Fill>
-                <ImageBrush Stretch="Fill" AlignmentX="Center" AlignmentY="Center" ImageSource="{Binding Icon, ElementName=root, Converter={StaticResource BitmapConverter}}" />
+                <ImageBrush Stretch="Fill" AlignmentX="Center" AlignmentY="Center" ImageSource="{Binding Icon, ElementName=root, Converter={StaticResource BitmapConverter}}" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
             </Rectangle.Fill>
         </Rectangle>
     </Grid>
