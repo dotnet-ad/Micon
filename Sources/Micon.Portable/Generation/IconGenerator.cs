@@ -13,6 +13,22 @@
 
         private readonly IPlatform platform;
 
+        private static PathOp[] CreateRoundedRectangle(Rect frame, double corner)
+        {
+            return new PathOp[] {
+                new MoveTo (frame.X + corner,frame.Y),
+                new LineTo (frame.X + frame.Width - corner, frame.Y + 0),
+                new CurveTo(new Point(frame.X + frame.Width,frame.Y + 0),new Point(frame.X + frame.Width,frame.Y + corner), new Point(frame.X + frame.Width,frame.Y + corner)),
+                new LineTo (frame.X + frame.Width, frame.Y + frame.Height  - corner),
+                new CurveTo(new Point(frame.X + frame.Width,frame.Y + frame.Height),new Point(frame.X + frame.Width-corner,frame.Y + frame.Height), new Point(frame.X + frame.Width-corner,frame.Y + frame.Height)),
+                new LineTo (frame.X + corner, frame.Y + frame.Height),
+                new CurveTo(new Point(frame.X + 0,frame.Y + frame.Height),new Point(frame.X + 0,frame.Y + frame.Height-corner), new Point(frame.X + 0,frame.Y + frame.Height-corner)),
+                new LineTo (frame.X + 0, corner),
+                new CurveTo(new Point(frame.X + 0,frame.Y + 0),new Point(frame.X + corner,frame.Y + 0), new Point(frame.X + corner,frame.Y + 0)),
+                new ClosePath ()
+            };
+        }
+
         public IImageCanvas GenerateIcon(IImage hdImage, Icon icon)
 		{
 			var result = this.platform.CreateImageCanvas(new Size(icon.Width,icon.Height));
@@ -29,29 +45,17 @@
                 {
                     case Shape.RoundedRectangle:
                         var corner = Math.Min(w,h) * 0.15;
-
                         var frame = new Rect(stroke/2, stroke/2, w - stroke * 1, h - stroke * 1);
-
-                        var ops = new PathOp[] {
-                            new MoveTo (frame.X + corner,frame.Y),
-                            new LineTo (frame.X + frame.Width - corner, frame.Y + 0),
-                            new CurveTo(new Point(frame.X + frame.Width,frame.Y + 0),new Point(frame.X + frame.Width,frame.Y + corner), new Point(frame.X + frame.Width,frame.Y + corner)),
-                            new LineTo (frame.X + frame.Width, frame.Y + frame.Height  - corner),
-                            new CurveTo(new Point(frame.X + frame.Width,frame.Y + frame.Height),new Point(frame.X + frame.Width-corner,frame.Y + frame.Height), new Point(frame.X + frame.Width-corner,frame.Y + frame.Height)),
-                            new LineTo (frame.X + corner, frame.Y + frame.Height),
-                            new CurveTo(new Point(frame.X + 0,frame.Y + frame.Height),new Point(frame.X + 0,frame.Y + frame.Height-corner), new Point(frame.X + 0,frame.Y + frame.Height-corner)),
-                            new LineTo (frame.X + 0, corner),
-                            new CurveTo(new Point(frame.X + 0,frame.Y + 0),new Point(frame.X + corner,frame.Y + 0), new Point(frame.X + corner,frame.Y + 0)),
-                            new ClosePath ()
-                        };
-
+                        var ops = CreateRoundedRectangle(frame,corner);
                         result.FillPath(ops, backgroundBrush);
                         if(icon.HasBorder) result.DrawPath(ops, new Pen(strokeBrush, stroke));
                         
                         break;
                     case Shape.Circle:
-                        result.DrawEllipse (Point.Zero, result.Size, null, backgroundBrush);
-                        if (icon.HasBorder) result.StrokeEllipse(new Rect(stroke / 2, stroke / 2, w - stroke,h - stroke), strokeBrush,stroke);
+                        var area = new Rect(stroke, stroke, w - stroke*2, h - stroke*2);
+
+                        result.DrawEllipse (area, null, backgroundBrush);
+                        if (icon.HasBorder) result.StrokeEllipse(area, strokeBrush,stroke);
                         break;
                     default:
                         result.DrawRectangle(-1,-1, result.Size.Width + 2, result.Size.Height + 2, null, backgroundBrush);
