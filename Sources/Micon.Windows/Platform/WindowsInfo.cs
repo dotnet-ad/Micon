@@ -1,19 +1,14 @@
 ﻿namespace Micon.Windows.Platform
 {
-    using Portable.Platform;
-    using System.Deployment.Application;
+    using Portable.Platform; 
+    using System.Reflection;
+
     public class WindowsInfo : IInfo
     {
         public string GetApplicationVersion()
         {
-            try
-            {
-                return ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-            }
-            catch (InvalidDeploymentException)
-            {
-                return "NA";
-            }
+            var version = Assembly.GetEntryAssembly().GetName().Version;
+            return $"{version.Major}.{version.Minor}.{version.Build}";
         }
     }
 }
