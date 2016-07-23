@@ -1,49 +1,51 @@
-﻿[
-  {
-    "Name": "playstore",
-    "Width": 512,
-    "Height": 512
-  },
-  {
-    "Name": "drawable-ldpi/ic_launcher",
-    "Width": 36,
-    "Height": 36,
-    "BackgroundShape": "Rectangle"
-  },
-  {
-    "Name": "drawable-mdpi/ic_launcher",
-    "Width": 48,
-    "Height": 48,
-    "BackgroundShape": "Rectangle"
-  },
-  {
-    "Name": "drawable-hdpi/ic_launcher",
-    "Width": 72,
-    "Height": 72,
-    "BackgroundShape": "Rectangle"
-  },
-  {
-    "Name": "drawable-xhdpi/ic_launcher",
-    "Width": 96,
-    "Height": 96,
-    "BackgroundShape": "Rectangle"
-  },
-  {
-    "Name": "drawable-xxhdpi/ic_launcher",
-    "Width": 144,
-    "Height": 144,
-    "BackgroundShape": "Rectangle"
-  },
-  {
-    "Name": "drawable-xxhdpi/ic_launcher",
-    "Width": 144,
-    "Height": 144,
-    "BackgroundShape": "Rectangle"
-  },
-  {
-    "Name": "drawable-xxxhdpi/ic_launcher",
-    "Width": 192,
-    "Height": 192,
-    "BackgroundShape": "Rectangle"
-  }
-]
+﻿{
+  "Icons": [
+    {
+      "Name": "playstore",
+      "Width": 512,
+      "Height": 512
+    },
+    {
+      "Name": "drawable-ldpi/ic_launcher",
+      "Width": 36,
+      "Height": 36,
+      "BackgroundShape": "Rectangle"
+    },
+    {
+      "Name": "drawable-mdpi/ic_launcher",
+      "Width": 48,
+      "Height": 48,
+      "BackgroundShape": "Rectangle"
+    },
+    {
+      "Name": "drawable-hdpi/ic_launcher",
+      "Width": 72,
+      "Height": 72,
+      "BackgroundShape": "Rectangle"
+    },
+    {
+      "Name": "drawable-xhdpi/ic_launcher",
+      "Width": 96,
+      "Height": 96,
+      "BackgroundShape": "Rectangle"
+    },
+    {
+      "Name": "drawable-xxhdpi/ic_launcher",
+      "Width": 144,
+      "Height": 144,
+      "BackgroundShape": "Rectangle"
+    },
+    {
+      "Name": "drawable-xxhdpi/ic_launcher",
+      "Width": 144,
+      "Height": 144,
+      "BackgroundShape": "Rectangle"
+    },
+    {
+      "Name": "drawable-xxxhdpi/ic_launcher",
+      "Width": 192,
+      "Height": 192,
+      "BackgroundShape": "Rectangle"
+    }
+  ]
+}

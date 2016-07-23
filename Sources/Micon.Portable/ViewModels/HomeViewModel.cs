@@ -23,12 +23,12 @@
             this.platform = platform;
 
             //Icons
-            var icons = new List<Icon>();
-            icons.AddRange(Icons.Load(Icons.iOS));
-            icons.AddRange(Icons.Load(Icons.Android));
-            icons.AddRange(Icons.Load(Icons.Windows));
-            this.defaultIcons = icons;
-            this.icons = icons;
+            var sets = new[] { Icons.Load(Icons.iOS), Icons.Load(Icons.Android), Icons.Load(Icons.Windows) };
+            
+            this.defaultIcons = sets.SelectMany((s) => s.Icons);
+            this.defaultManifests = sets.SelectMany((s) => s.Manifests);
+            this.icons = this.defaultIcons;
+            this.manifests = this.defaultManifests;
             this.iconsPreview = defaultIconPreview;
             
             //Depdencies
@@ -107,6 +107,8 @@
 
         private IEnumerable<Icon> icons;
 
+        private IEnumerable<MiconManifest> manifests;
+
         private MiconPreview iconsPreview;
 
         private readonly static MiconPreview defaultIconPreview = new MiconPreview()
@@ -122,7 +124,8 @@
 
         private readonly IInfo info;
 
-        private readonly List<Icon> defaultIcons;
+        private readonly IEnumerable<Icon> defaultIcons;
+        private readonly IEnumerable<MiconManifest> defaultManifests;
         private readonly IPlatform platform;
 
         #endregion
@@ -193,7 +196,7 @@
             var path = parameter as string;
             var f = await this.storage.Load<MiconFile>(path);
 
-            this.icons = f.Icons;
+            this.icons = f.Icons.Icons;
             this.LogoPath = f.LogoPath;
             this.BackgroundColor = f.BackgroundColor;
             this.BackgroundEndColor = f.BackgroundEndColor;
@@ -211,7 +214,7 @@
 
             var f = new MiconFile()
             {
-                Icons = icons,
+                Icons = new MiconIconSet() { Icons = icons },
                 Preview = iconsPreview,
                 LogoPath = this.LogoPath,
                 GradientMode = this.GradientMode,
